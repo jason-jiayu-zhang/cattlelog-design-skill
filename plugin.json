@@ -1,0 +1,8 @@
+{
+  "name": "cattlelog-design-plugin",
+  "version": "1.0.0",
+  "description": "Davis Cattlelog brand identity and design system",
+  "skills": [
+    "skills/cattlelog-design-skill/SKILL.md"
+  ]
+}
