@@ -64,23 +64,47 @@ The Davis Cattlelog leverages a cohesive palette heavily indexing on our distinc
 
 ## 2. Layout & Device Responsiveness
 
-Cattlelog relies on a fluid grid system mapped to Tailwind CSS standards, designed for dense academic data visualizations across devices.
+Cattlelog relies on a fluid grid system mapped to CSS Grid/Flexbox and Tailwind CSS standards. It mandates a deterministic structural shell to prevent horizontal overflow and guarantee visual density.
 
-### Grid Structure & Margins
-- **Desktop (>= 1024px):** 12-column grid. Standard margins of `32px` to `64px`. Gutter width of `24px`.
-- **Tablet (768px - 1023px):** 8-column grid. Standard margins of `24px` to `32px`. Gutter width of `16px`.
-- **Mobile (< 768px):** 4-column grid. Standard margins of `16px`. Gutter width of `16px`.
+### Primary Shell Grid Architecture
+The global application shell (`#root` or `#app`) MUST implement the following CSS Grid architecture:
+- **CSS Grid Setup:** `display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh;`
+- **Main Axis:** `grid-template-columns: minmax(0, 1fr);`
+- **App Bar (Header):** Fixed `height: 64px;` (desktop) / `56px` (mobile). Must utilize `position: sticky; top: 0; z-index: 200; backdrop-filter: blur(12px);`.
+- **Content Viewport:** `padding-top: var(--header-height);`.
+
+### Responsive Breakpoint Tokenization & Grid Structure
+- **Mobile (`xs`):** `< 640px`
+  - Container: `width: 100%; max-width: 100%;`
+  - Grid: 4 columns, `gap: 16px`
+  - Paddings: `padding-inline: clamp(16px, 4vw, 24px);`
+- **Tablet (`sm` to `md`):** `640px` to `< 1024px`
+  - Container: `max-width: 768px`
+  - Grid: 8 columns, `gap: 16px`
+  - Paddings: `padding-inline: 24px;`
+- **Desktop (`lg`):** `1024px` to `< 1280px`
+  - Container: `max-width: 1024px`
+  - Grid: 12 columns, `gap: 24px`
+  - Paddings: `padding-inline: 32px;`
+- **Widescreen (`xl` to `2xl`):** `>= 1280px`
+  - Container: `max-width: 1280px` (Strictly enforced limit to prevent infinite widening)
+  - Grid: 12 columns, `gap: 32px`
+  - Paddings: `padding-inline: 64px;`
+
+### Fluid Container Rule & Safe Areas
+Content inside `.container` classes must NOT exceed the max container width tokens above, maintaining centered alignment with `margin-inline: auto`.
+- Apply `padding-bottom: env(safe-area-inset-bottom);` for iOS safe areas.
+- **Horizontal Overflow Zero Tolerance:** Apply `overflow-x: hidden;` to `html, body` explicitly.
 
 ### Responsive Layout Patterns
 - **Mobile Experience:** 
   - Single-column stacked layouts for on-the-go viewing.
-  - Search bar must be sticky (`sticky top-0`) to ensure immediate access.
-  - Deep filters must be placed inside collapsible accordion menus or bottom-sheet drawers to conserve vertical space.
-  - Horizontal scrolling for data tables must include visual affordances (fade-out masks or scroll indicators).
+  - Search bar must be sticky (`sticky top-[var(--header-height)]`) to ensure immediate access.
+  - Deep filters must be placed inside collapsible accordion menus or bottom-sheet drawers (`role="dialog"`).
+  - Horizontal scrolling for data tables must include visual affordances (CSS mask-image fade-out: `mask-image: linear-gradient(to right, #000 80%, transparent);`) and `scroll-snap-type: x mandatory`.
 - **Tablet/Desktop Experience:**
-  - Leverage screen real estate for dense information visualization.
-  - Utilize Split Panes: fixed search/filter pane on the left, infinite scroll results on the right.
-  - Course Comparison pages should utilize side-by-side card layouts.
+  - Utilize Split Panes for Discovery: fixed search/filter pane on the left (`width: 320px`, `flex-shrink: 0`), infinite scroll grid results on the right (`flex-grow: 1`).
+  - Course Comparison pages should utilize side-by-side card layouts using `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));`.
 
 ---
 
@@ -111,14 +135,23 @@ Our primary brand font is **Figtree**. The hierarchy is explicitly defined below
 - **Body:** Regular 14px
 - **Subtext:** Regular 12px
 
-### Keyboard Navigation & Focus Rules
-- **Focus Rings:** Browser default focus rings are banned. Implement custom `:focus-visible` parameters on all interactive elements.
-  - Use `outline-2 outline-offset-2 outline-gold-500` (or `blue-500` where gold clashes) to ensure keyboard-only navigation is extremely fluid and distinct.
-- **Skip Links:** Provide a "Skip to Content" anchor for screen readers.
+### Strict Focus Management Strategy
+- **Focus Rings:** Browser default focus rings are strictly banned (`outline-none`). Implement custom `:focus-visible` globally on all interactive elements to prevent mouse-click focus rings.
+  - Standard focus ring: `outline outline-2 outline-offset-2 outline-gold-500` (or `blue-500` where gold clashes).
+  - Inner focus ring (for constrained spaces like table cells): `ring-2 ring-inset ring-gold-500`.
+- **Focus Trapping:** Modals, dialogs, and bottom sheets MUST trap focus within their container while open. Tabbing past the last interactive element must wrap to the first interactive element.
+- **Focus Restoration:** Upon closing a modal, dialog, or dropdown, focus MUST be programmatically returned to the element that originally triggered the overlay.
+- **Roving Tabindex:** For composite widgets (like custom toolbars, tablists, or complex comboboxes), implement a roving `tabindex`. Only the currently active element should have `tabindex="0"`; the rest must have `tabindex="-1"`. Arrow keys map strictly to focus movement within the composite widget.
+- **Skip Links:** Provide a visually hidden "Skip to Content" (`sr-only focus:not-sr-only`) anchor at the absolute top of the DOM to bypass repetitive navigation.
 
-### Screen Reader Optimization
-- Virtualized lists (e.g., using `React Virtual` for heavy course queries) MUST apply `aria-setsize` and `aria-posinset` dynamically, along with proper `role="list"` and `role="listitem"` tags so screen readers can parse gracefully without performance degradation.
-- All interactive svgs/icons must have `aria-hidden="true"` accompanied by screen-reader only (`sr-only`) descriptive text.
+### Strict ARIA & Accessibility Roles Map
+- **Navigation (`role="navigation"`):** Must be applied to all primary navigation containers. Use `aria-label="Primary Navigation"` for main headers and `aria-label="Pagination"` for list navigations.
+- **Search Regions (`role="search"`):** The global search wrapper must have `role="search"`. The internal input must include `aria-label="Search courses or professors"` and `aria-autocomplete="list"`.
+- **Modals & Dialogs (`role="dialog"`):** All overlays must use `role="dialog"`, include `aria-modal="true"`, and be labelled by `aria-labelledby` referencing the dialog's title ID.
+- **ComboBox/Dropdowns (`role="combobox"`):** All custom select inputs must implement `role="combobox"`, with `aria-expanded` strictly toggling between `true`/`false`. The listbox must have `role="listbox"`, and items within must have `role="option"` with `aria-selected` tracking selection state.
+- **Tabs (`role="tablist"`, `role="tab"`, `role="tabpanel"`):** Tabbed interfaces must rigorously map `aria-controls` from the tab to the panel ID, and `aria-labelledby` from the panel to the tab ID.
+- **Live Regions (`aria-live`):** Dynamic data updates (e.g., filter results count changes) must announce silently to screen readers using `aria-live="polite"` on a visually hidden (`sr-only`) container. Form errors must use `aria-live="assertive"`.
+- **Screen Reader Optimization:** Virtualized lists (e.g., `React Virtual`) MUST apply `aria-setsize` and `aria-posinset` dynamically. All interactive SVGs/icons must have `aria-hidden="true"` accompanied by `sr-only` descriptive text.
 
 ---
 
@@ -134,10 +167,18 @@ Motion should feel deliberate, premium, and inherently functional. Unnecessary m
 - The `CourseSearchBar` must transition smoothly when focused: expand its width dynamically or drop down a blurred overlay (`backdrop-blur-md`) over the background content to isolate the search experience.
 - Input should have a micro-delay (`150ms`) expanding into its active state.
 
-### Async Loading States
+### Async Loading States & Skeleton Constraints
 - **Skeleton Screens:** Do NOT use spinners for full-page loads. Use skeleton placeholders that trace the exact layout of the incoming data.
-- Skeletons should use a soft, localized pulse animation (`animate-pulse` mapping to `black-200`/`black-300`). 
-- **Mascot Integration:** For deeper processing states, utilize the brand mascot ("Cory the Cow") dynamically, e.g., Cory walking or chewing cud during prolonged backend fetching via React Query.
+- **Skeleton Pulse Animation:** Must use a localized pulse animation (`animate-pulse`). Keyframes must alternate strictly between `bg-black-100` (opacity 1) and `bg-black-200` (opacity 0.6) with exactly a `1.5s` duration, ease-in-out curve.
+- **Placeholder Widths & Sizing:**
+  - Header placeholders: Fixed height of `32px` (`h-8`), width randomized deterministically between `40%` and `60%` (e.g., `w-[45%]`).
+  - Text line placeholders: Fixed height of `16px` (`h-4`). 
+  - For multi-line paragraphs, the last line must always be exactly `w-[70%]` or `w-[80%]` to simulate natural ragged right text. Never use `w-full` for all lines.
+  - Border radius on all text skeletons must strictly be `4px` (`rounded`).
+- **Staggered Fade-Ins:**
+  - Skeletons rendering multiple cards (e.g., list views) MUST stagger their entrance or pulse phase. Delay each subsequent card skeleton by exactly `75ms` (`animation-delay: 75ms`, `150ms`, `225ms`) to create a cascading loading effect.
+  - Upon data resolution, the transition from skeleton to actual content must use an explicit cross-fade: content fades in with `duration-300` `ease-out`, while skeleton fades out over `duration-150` `ease-in`.
+- **Mascot Integration:** For deeper processing states exceeding `1000ms`, utilize the brand mascot ("Cory the Cow") dynamically (e.g., walking or chewing cud) centered in the viewport with a `150ms` delay before appearance to prevent flash-of-loading state.
 
 ### Micro-delights
 - **Favoriting a Course:** Trigger a distinct elastic scale bounce (e.g., Framer Motion `spring` physics: `stiffness: 400, damping: 10`) on the star/heart icon.
@@ -150,13 +191,184 @@ Motion should feel deliberate, premium, and inherently functional. Unnecessary m
 
 ### CLS (Cumulative Layout Shift) Protection
 - **Skeleton Heights:** Charts, especially Grade Distribution visualizations, must pre-allocate standard `min-height` parameters before the async data returns.
-- **Scrollbar Gutter:** Apply `scrollbar-gutter: stable` (or `overflow-y: scroll`) at the layout root. This strictly avoids horizontal content jumping when dynamic pagination or list filtering causes the vertical scrollbar to toggle on/off.
+- **Scrollbar Architecture:**
+  - **Global Gutter:** Apply `scrollbar-gutter: stable` (or `overflow-y: scroll`) at the `<html/>` or `<body/>` root to explicitly prevent horizontal Cumulative Layout Shift (CLS) when dynamic content triggers a vertical scrollbar.
+  - **Custom Scrollbars:** Default browser scrollbars must be visually suppressed or stylized to match the brand. WebKit pseudo-elements (`::-webkit-scrollbar`, `::-webkit-scrollbar-thumb`) must be customized using `black-200` for track and `black-400` (hover `black-500`) for thumb.
+  - **Hide Scrollbar Rule:** For nested horizontal scrolling (like pill filter lists), explicitly hide the scrollbar (`scrollbar-width: none` & `::-webkit-scrollbar { display: none; }`) to maintain a clean UI, but ensure affordances (gradient masks/arrows) remain.
+- **Scroll Snap Rules:**
+  - **Horizontal Carousels:** Must enforce `snap-x` and `snap-mandatory` on the scrolling container. Child items must enforce `snap-center` or `snap-start` to ensure the view strictly rests on complete items, preventing halfway crops.
+  - **Overscroll Behavior:** Set `overscroll-behavior: contain` on nested scrolling regions (e.g., side panels or dropdowns) to prevent scroll chaining (accidentally scrolling the main page when reaching the end of the dropdown).
 
 ### State Visualizations
-- **Empty States:** Searches yielding no results must render an illustrated "Empty State" component (e.g., Cory looking confused) with clear, actionable fallback buttons (e.g., "Clear Filters", "Browse All").
-- **Error States (404/500):** Friendly, brand-aligned error pages. Do not expose raw stack traces.
-- **Offline / Network Interruption:** Implement a subtle sticky banner (`bg-yellow-500 text-black-900`) at the top of the viewport when `navigator.onLine` is false.
+- **Empty States Anatomy:** 
+  - **Container:** Must use `flex flex-col items-center justify-center` with `min-h-[300px]` and a `padding` of exactly `64px` (`p-16`).
+  - **Illustration:** Strict dimensions of `160px` by `160px`. Must use a desaturated brand illustration (e.g., Cory the Cow looking confused), opactiy strictly set to `60%`.
+  - **Heading (Text):** Must use Heading 3 (`text-[30px] font-bold leading-tight tracking-tight`) mapped to `black-900`. Margin top strictly `24px` (`mt-6`).
+  - **Description (Text):** Must use Body (`text-[16px] font-normal leading-relaxed`) mapped to `black-600`. Max width must be constrained to `400px` (`max-w-[400px]`), aligned `text-center`. Margin top strictly `12px` (`mt-3`).
+  - **Call-to-Action:** Secondary button array (e.g., "Clear Filters") strictly separated by `16px` (`gap-4`), placed exactly `32px` (`mt-8`) below the description.
+- **Error States (404/500/Boundary):** 
+  - Do not expose raw stack traces. 
+  - Must render a standardized ErrorCard component.
+  - **Card Container:** `max-w-[480px] w-full p-8 rounded-xl border border-red-200 bg-red-50`.
+  - **Error Title:** Heading 3, `text-red-700`.
+  - **Error Code:** Must be visible in Subtext (`14px`) `text-red-500 font-mono mt-2`.
+  - **Fallback Action:** "Return Home" or "Try Again" button using `bg-red-600 hover:bg-red-700 text-white rounded-lg px-4 py-2 mt-6`.
+- **Offline / Network Interruption:** Implement a subtle sticky banner (`bg-yellow-500 text-black-900 h-[40px] flex items-center justify-center text-[14px] font-bold shadow-subtle z-500`) at the top of the viewport when `navigator.onLine` is false.
 
 ### Thematic Flourishes
 - While adhering to strict academic utility, incorporate playful brand touches. Hover states on secondary buttons might slide in a subtle cow print pattern at 5% opacity.
 - Tooltips and small floating labels should be snappy (`100ms` duration) with no bounce, preserving a highly functional tone.
+
+---
+
+## 6. Form Controls Anatomy
+
+### Text Inputs & Selects
+- **Height Definitions:** Medium `40px` (Default), Large `48px`, Small `32px`.
+- **Padding:** `0px 12px` strictly.
+- **Border:** `1px solid black-200` (Light Mode), `1px solid black-800` (Dark Mode).
+- **Border Radius:** `8px` (`rounded-lg`).
+- **Typography:** Body Regular 16px to prevent iOS auto-zoom on focus.
+- **States:**
+  - *Hover:* Border darkens to `black-400`.
+  - *Focus:* Border transforms to `blue-500`, accompanied by a `0 0 0 2px blue-200` outer box-shadow.
+  - *Disabled:* Background `black-50`, Text `black-400`, Cursor `not-allowed`.
+
+### Checkboxes & Radios
+- **Size:** Exactly `16x16px`.
+- **Border Radius:** `4px` for checkboxes, `50%` for radios.
+- **Checked State:** Background `blue-500`, Border `blue-500`, SVG Checkmark `black-0`.
+
+---
+
+## 7. Data Visualization Tokens
+
+### Chart & Graph Colors
+To guarantee visual consistency in grade distributions and analytic graphs:
+- **Sequential (Blue Scale):** `blue-300` -> `blue-500` -> `blue-700` -> `blue-900`.
+- **Diverging (Bad to Good):** `red-500` -> `black-200` -> `green-500`.
+- **Categorical (Max 5 items):**
+  1. `blue-500`
+  2. `gold-500`
+  3. `green-500`
+  4. `#8A4285` (Brand Purple Extension)
+  5. `orange-500`
+- **Tooltips (Data viz):** Background `black-900`, Text `black-0`, Padding `8px 12px`, Border-radius `4px`, `pointer-events: none`, Z-index `600`.
+
+---
+
+## 8. Status & Feedback Elements
+
+### Toasts / Snackbars
+- **Dimensions:** Width `min(300px, calc(100vw - 32px))`, max `400px`.
+- **Padding:** `16px` uniform.
+- **Border Radius:** `8px`.
+- **Elevation:** `shadow-heavy`.
+- **Motion:** Slide in from bottom-right (`transform: translateY(100%)` to `0`, Opacity `0` to `1` over `200ms` ease-out).
+- **Anatomy (Success):** Left border `4px solid green-500`, Background `black-0`, Icon `green-500`.
+
+### Badges / Tags
+- **Dimensions:** Height `24px`.
+- **Padding:** `0 8px`.
+- **Typography:** Subtext Regular 14px or Mobile Subtext 12px Bold.
+- **Border Radius:** `9999px` (Pill format).
+- **Colors:** Derived from semantic scale. Default: `blue-50` background, `blue-800` text.
+
+---
+
+## 9. Z-Index Scale
+
+### Strict Layering Architecture
+Never use arbitrary z-index values (e.g., `99999`). Adhere to the following deterministic scale:
+- **Background Elements:** `-10`
+- **Base Content:** `0`
+- **Elevated Content (Cards):** `10`
+- **Dropdowns / Popovers:** `100`
+- **Sticky Headers / Navbars:** `200`
+- **Overlays / Backdrops:** `300`
+- **Modals / Dialogs:** `400`
+- **Toasts / Notifications:** `500`
+- **Tooltips:** `600`
+
+---
+
+## 10. Navigation Anatomy
+
+### 10.1 Top Navigation (Topnav) Pattern
+- **Dimensions:** 
+  - Fixed Height: `64px` across all breakpoints.
+  - Border Bottom: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
+  - Background: `rgba(255, 255, 255, 0.8)` with `backdrop-blur-md` (Light) / `rgba(24, 24, 24, 0.8)` with `backdrop-blur-md` (Dark).
+- **Positioning:** Strictly `sticky top-0` with `z-index: 200`.
+- **Layout Constraints:**
+  - Standard Grid Container: `max-w-[1280px] mx-auto`.
+  - Padding X: `16px` (Mobile), `24px` (Tablet), `32px` (Desktop).
+  - Flexbox Layout: `flex items-center justify-between`.
+- **Anatomical Regions:**
+  - **Left (Brand):** Logo lockup. Logo height `32px`, max-width `140px`. Padding right `24px`.
+  - **Center (Search/Nav):** Search bar or primary link list (`flex gap-6`). Links must use Body Regular 16px.
+  - **Right (Utility):** Profile, Theme Toggle, Notifications. Fixed gap `16px`. Icon sizes `24px`.
+
+### 10.2 Sidebar Navigation (Desktop Only)
+- **Visibility:** Visible only at `lg` breakpoint and above (`hidden lg:flex`).
+- **Dimensions:**
+  - Fixed Width: `240px` (Expanded) / `72px` (Collapsed).
+  - Height: `calc(100vh - 64px)` (Starts below Topnav).
+  - Border Right: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
+- **Padding:** `24px 16px`.
+- **Item Anatomy:**
+  - Height: `40px` per item.
+  - Border Radius: `8px`.
+  - Padding: `0 12px`.
+  - Icon: Left-aligned, `20px` width/height.
+  - Text: Body Regular 16px, `margin-left: 12px`.
+- **Selected State:**
+  - Background: `blue-50` (Light) / `blue-900` (Dark).
+  - Text/Icon Color: `blue-700` (Light) / `blue-200` (Dark).
+  - Indicator: Left border pseudo-element (`width: 4px`, `height: 20px`, `background: blue-500`, `border-radius: 0 4px 4px 0`, absolutely positioned at `left: 0`).
+
+---
+
+## 11. Interaction State Machine
+
+### 11.1 Global State Hierarchy
+All interactive elements (buttons, links, list items) MUST strictly follow this state precedence, from lowest to highest:
+1. `Default`
+2. `Hover` (`:hover`)
+3. `Focus` (`:focus-visible`)
+4. `Active` (`:active`)
+5. `Disabled` (`:disabled` or `aria-disabled="true"`)
+
+### 11.2 State Mutators
+- **Hover:**
+  - *Transform:* Background lightness decreases by ~5-10% (Light mode) or increases by ~5-10% (Dark mode). E.g., `blue-500` -> `blue-600` on hover.
+  - *Cursor:* `pointer`.
+  - *Transition:* `transition-colors duration-200 ease-in-out`.
+- **Active (Pressed):**
+  - *Transform:* Scale down slightly (`scale-95`). Background becomes darker (Light mode) or lighter (Dark mode). E.g., `blue-600` -> `blue-700`.
+  - *Transition:* `duration-75 ease-out`.
+- **Focus:**
+  - *Visual Override:* Applies custom focus ring (`outline-2 outline-offset-2 outline-gold-500`).
+  - *Note:* Focus state stacks with Hover/Active visually (e.g., ring persists during click).
+- **Disabled:**
+  - *Visual Override:* Opacity drops to `50%` OR background converts to `black-50` / text to `black-400`.
+  - *Interactivity:* `pointer-events-none`, cursor `not-allowed`.
+  - *Accessibility:* Must use `disabled` attribute for form inputs, or `aria-disabled="true"` for divs/anchors mimicking buttons. No `:hover` or `:active` styles should trigger.
+
+### 11.3 Specific Component States
+**Primary Button:**
+- Default: `bg-blue-500 text-black-0`
+- Hover: `bg-blue-600 shadow-md`
+- Active: `bg-blue-700 scale-[0.98]`
+- Disabled: `bg-black-200 text-black-400 opacity-70`
+
+**Secondary/Outline Button:**
+- Default: `border-2 border-blue-500 text-blue-500 bg-transparent`
+- Hover: `bg-blue-50`
+- Active: `bg-blue-100 scale-[0.98]`
+- Disabled: `border-black-200 text-black-400`
+
+**Text Links:**
+- Default: `text-blue-600 underline-offset-4 decoration-transparent`
+- Hover: `text-blue-700 decoration-blue-700 underline`
+- Focus: Adds global focus ring on top.
