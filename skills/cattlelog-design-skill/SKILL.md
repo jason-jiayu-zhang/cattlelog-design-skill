@@ -38,7 +38,7 @@ Do not use raw colors like `#6DAEDF` or generic tailwind classes like `blue-500`
 
 ## Token Lookup
 
-For colors, typography, spacing, radii, and component token composites, read `/design.md` (repo root) first — it's a compact, machine-parseable token sheet in the same format as Vercel's `design.md`. Only fall back to `references/DESIGN.md` below for anatomy and behavioral rules it doesn't cover.
+For colors, typography, spacing, radii, and component token composites, read `design.md` (co-located next to this SKILL.md; also published at the repo root as `cattlelog-design-skill/design.md`) first — it's a compact, machine-parseable token sheet in the same format as Vercel's `design.md`. Only fall back to `references/DESIGN.md` below for anatomy and behavioral rules it doesn't cover.
 
 ## Reference Files
 
