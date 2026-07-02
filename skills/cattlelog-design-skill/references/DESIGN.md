@@ -49,6 +49,36 @@ The Davis Cattlelog leverages a cohesive palette heavily indexing on our distinc
 - **Warning:** `yellow-500` (`#E7C756`) / `orange-500` (`#E0A846`)
 - **Error/Destructive:** `red-500` (`#E05346`) / `pink-500` (`#D97575`)
 - **Info:** `blue-500` (`#6DAEDF`)
+- **Logo Pink:** `pink-500` (`#D97575`) / `pink-250` (`#F5A0A2`)
+
+### Surface & Accent Palette (verified from Figma "Color Palette - Scales")
+Used for badge/card/tag surfaces distinct from the core brand scale — each `surface-N` pairs with the same-numbered `accent-N` for text/icon color on top of it.
+- `surface-1` `#F3EEFF` / `accent-1` `#7C3AED`
+- `surface-2` `#EFF8F8` / `accent-2` `#6AC2A9`
+- `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`
+- `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`
+- `surface-5` `#FFE5D5` / `accent-5` `#C2410C`
+- `surface-6` `#ECFEFF` / `accent-6` `#0E7490`
+- `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`
+- `surface-8` `#F1F5F9` / `accent-8` `#0F172A`
+- `surface-9` `#F0FDF4` / `accent-9` `#15803D`
+- `surface-10` `#FFF7ED` / `accent-10` `#C2410C`
+
+### General Education (GE) Category Colors (verified from Figma)
+One dedicated color per UC Davis GE requirement tag — use these (not an arbitrary accent) whenever rendering a GE badge on a course card:
+- `ge-ah` `#E11D48` (Arts & Humanities)
+- `ge-ss` `#0284C7` (Social Sciences)
+- `ge-se` `#7C3AED` (Science & Engineering)
+- `ge-acgh` `#D97706` (American Cultures, Governance & History)
+- `ge-dd` `#DB2777` (Domestic Diversity)
+- `ge-ol` `#059669` (Oral Literacy)
+- `ge-ql` `#2563EB` (Quantitative Literacy)
+- `ge-sl` `#0891B2` (Scientific Literacy)
+- `ge-vl` `#CA8A04` (Visual Literacy)
+- `ge-wc` `#EA580C` (World Cultures)
+- `ge-we` `#16A34A` (Writing Experience)
+
+*Category-name expansions above are inferred from UC Davis's public GE program naming — confirm against the product spec before using them in user-facing copy.*
 
 ### Contrast Grid & Usage Rules
 - **Light Mode:** Use `black-0` to `black-50` for backgrounds. Primary text must be `black-900` or `black-1000` to meet WCAG AAA guidelines. `blue-700` and `blue-800` for primary actions.
@@ -113,27 +143,35 @@ Content inside `.container` classes must NOT exceed the max container width toke
 ### Typography Stack
 Our primary brand font is **Figtree**. The hierarchy is explicitly defined below to prevent cognitive fatigue.
 
-*Desktop / General Hierarchy:*
-- **Heading 1:** Bold (700), 64px, Line Height 100%, Tracking -2px
-- **Heading 2:** Bold (700), 48px, Line Height 100%, Tracking -2px
-- **Heading 3:** Bold (700), 30px, Line Height 100%, Tracking -2px
-- **Subheading 1:** Bold (700), 24px, Line Height 100%, Tracking 0px
-- **Subheading 2:** Bold (700), 18px, Line Height 100%, Tracking 0px
-- **Subheading 3:** Regular (400), 16px, Line Height 100%, Tracking 0px
-- **Subheading 4:** Regular (400), 14px, Line Height 100%, Tracking 0px
-- **Body:** Regular (400), 16px, Line Height 100%, Tracking -1px
-- **Subtext:** Regular (400), 14px, Line Height 100%, Tracking -2px
+*Desktop / General Hierarchy (verified against Figma "Typography - Type Scale" — line heights are NOT 100%, they range ~110–150% by level; previous version of this doc had this wrong):*
+- **Heading 1:** Bold (700), 64px, Line Height 70.4px (110%), Tracking -2px
+- **Heading 2:** Bold (700), 48px, Line Height 52.8px (110%), Tracking -2px
+- **Heading 3:** Bold (700), 30px, Line Height 36px (120%), Tracking -2px
+- **Subheading 1:** Bold (700), 24px, Line Height 31.2px (130%), Tracking 0px
+- **Subheading 2:** SemiBold (600), 18px, Line Height 25.2px (140%), Tracking 0px — *note: SemiBold on desktop, but Bold on mobile (see below); previous version of this doc incorrectly said Bold on both.*
+- **Subheading 3:** Regular (400), 16px, Line Height 24px (150%), Tracking 0px
+- **Subheading 4:** Regular (400), 14px, Line Height 21px (150%), Tracking 0px
+- **Body:** Regular (400), 16px, Line Height 24px (150%), Tracking -1px
+- **Subtext:** Regular (400), 14px, Line Height 19.6px (140%), Tracking -2px
 
-*Mobile Hierarchy:*
-- **Heading 1:** Bold 36px
-- **Heading 2:** Bold 30px
-- **Heading 3:** Bold 24px
-- **Subheading 1:** Bold 20px
-- **Subheading 2:** Bold 16px
-- **Subheading 3:** Regular 14px
-- **Subheading 4:** Regular 13px
-- **Body:** Regular 14px
-- **Subtext:** Regular 12px
+*Mobile Hierarchy (verified against Figma):*
+- **Heading 1:** Bold 700, 36px, Line Height 39.6px (110%), Tracking -2px
+- **Heading 2:** Bold 700, 30px, Line Height 36px (120%), Tracking -2px
+- **Heading 3:** Bold 700, 24px, Line Height 28.8px (120%), Tracking -2px
+- **Subheading 1:** Bold 700, 20px, Line Height 26px (130%), Tracking 0px
+- **Subheading 2:** Bold 700, 16px, Line Height 22.4px (140%), Tracking 0px
+- **Subheading 3:** Regular 400, 14px, Line Height 21px (150%), Tracking 0px
+- **Subheading 4:** Regular 400, 13px, Line Height 19.5px (150%), Tracking 0px
+- **Body:** Regular 400, 14px, Line Height 21px (150%), Tracking -1px
+- **Subtext:** Regular 400, 12px, Line Height 16.8px (140%), Tracking -2px
+
+### Content Truncation & Line-Clamp
+- **Single-Line Truncation:** Any dynamically generated single-line string (e.g., Professor names, short titles) that risks container overflow MUST apply strictly `truncate` (maps to `overflow: hidden; text-overflow: ellipsis; white-space: nowrap;`).
+- **Multi-Line Truncation:** Long description bodies (e.g., Course Descriptions, Review text) MUST use the `-webkit-line-clamp` property. 
+  - Standard card previews: Strict limit of `line-clamp-3` (3 lines max).
+  - Compact list items: Strict limit of `line-clamp-2` (2 lines max).
+- **Tooltips on Truncation:** When `text-overflow: ellipsis` is triggered, the UI MUST supply a native `title` attribute or a custom tooltip (via `z-index: 600`) revealing the full text on hover.
+- **Word Break Control:** Always apply `break-words` alongside truncation to ensure contiguous text (like URLs) breaks gracefully and does not rupture the grid boundary.
 
 ### Strict Focus Management Strategy
 - **Focus Rings:** Browser default focus rings are strictly banned (`outline-none`). Implement custom `:focus-visible` globally on all interactive elements to prevent mouse-click focus rings.
@@ -251,7 +289,7 @@ To guarantee visual consistency in grade distributions and analytic graphs:
   1. `blue-500`
   2. `gold-500`
   3. `green-500`
-  4. `#8A4285` (Brand Purple Extension)
+  4. `#8A4285` (Brand Purple Extension) — *unverified: not found among the Figma variables pulled from the Color Palette pages; either an unbound raw fill in a specific chart or a leftover placeholder. Confirm before relying on it, or substitute `accent-1` (`#7C3AED`), which is a verified purple token.*
   5. `orange-500`
 - **Tooltips (Data viz):** Background `black-900`, Text `black-0`, Padding `8px 12px`, Border-radius `4px`, `pointer-events: none`, Z-index `600`.
 
@@ -372,3 +410,81 @@ All interactive elements (buttons, links, list items) MUST strictly follow this 
 - Default: `text-blue-600 underline-offset-4 decoration-transparent`
 - Hover: `text-blue-700 decoration-blue-700 underline`
 - Focus: Adds global focus ring on top.
+
+---
+
+## 12. Tooltip & Popover Anatomy
+
+### 12.1 Rendering Infrastructure (Portals)
+- **React Portals:** All Tooltips, Popovers, and Dropdowns MUST be rendered via React Portals (e.g., `createPortal`) to the end of the `document.body`. This prevents z-index clipping and overflow hidden issues caused by parent container constraints.
+- **Positioning Engine:** Use a robust positioning engine (e.g., `@floating-ui/react` or equivalent) to dynamically calculate `top` and `left` coordinates relative to the viewport.
+
+### 12.2 Tooltips (Micro-Information)
+- **Usage:** Strictly for transient, non-interactive helper text (e.g., explaining an icon). Do NOT put links or buttons inside Tooltips.
+- **Trigger:** Triggers on `mouseenter` and `focus`. Must hide on `mouseleave` and `blur`.
+- **Delay:** `300ms` wait before appearing. `0ms` hide delay to prevent UI stickiness.
+- **Anatomy:**
+  - Background: `black-900` (Always dark, regardless of light/dark mode).
+  - Text: `black-0`, Subtext Regular 12px.
+  - Padding: `6px 12px`.
+  - Border Radius: `6px`.
+  - Max Width: `200px`. Text wraps if longer.
+- **Motion:** `opacity-0 scale-95` to `opacity-100 scale-100` over `150ms ease-out`.
+- **Accessibility:** Trigger must have `aria-describedby` pointing to the Tooltip's ID. Tooltip must have `role="tooltip"`.
+
+### 12.3 Popovers (Interactive Information)
+- **Usage:** For complex, interactive content (filters, mini-profiles, quick settings) tied to a specific anchor.
+- **Trigger:** Triggers strictly on `click`. Closes on `Escape` key or click outside.
+- **Anatomy:**
+  - Background: `black-0` (Light) / `black-900` (Dark).
+  - Border: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
+  - Elevation: `shadow-heavy` (Crucial to distinguish from base layer).
+  - Border Radius: `12px`.
+  - Padding: Typically `16px`.
+- **Safe Areas & Collision:**
+  - Implement `flip` logic: If Popover clips the bottom of the viewport, it MUST flip to the top of the anchor.
+  - Implement `shift` logic: Prevent horizontal clipping by shifting along the cross-axis.
+  - Margin from viewport edge: Minimum `16px`.
+- **Focus Trap:** When opened, focus MUST move into the Popover (or its first focusable element). When closed, focus MUST return to the trigger button.
+- **Accessibility:** Trigger must have `aria-haspopup="dialog"` and `aria-expanded="true/false"`. Popover must have `role="dialog"`.
+
+---
+
+## 13. Image & Asset Optimization Rules
+
+To guarantee visual fidelity and eliminate Cumulative Layout Shift (CLS) from media loads, all imagery and structural assets must adhere to these rigid rules:
+
+### Aspect Ratio Enforcement
+Images and containers MUST declare a rigid `aspect-ratio` to reserve layout space prior to asset load.
+- **Professor Portraits/Avatars:** `aspect-ratio: 1/1; border-radius: 50%;`. Max dimensions `128x128px`.
+- **Course / Major Banner Images:** `aspect-ratio: 16/9;` or `21/9` for widescreen heroic headers.
+- **Campus Photography / Thumbnails:** `aspect-ratio: 4/3;` or `3/2;`.
+
+### Fit & Rendering Rules
+- Every structural image (`<img>`, `<video>`) MUST use `object-fit: cover; object-position: center;` unless explicitly showcasing an uncropped data visualization (`object-fit: contain;`).
+- Background images must use `background-size: cover; background-position: center;`.
+- SVGs must include `viewBox` and default to `fill: currentColor;` for seamless theme integration. Do NOT hardcode colors in SVG tags.
+
+### Loading & Decoding Policies
+- **Above-the-Fold Media:** Add `fetchpriority="high"` and DO NOT apply lazy loading.
+- **Below-the-Fold Media:** MUST include `loading="lazy"` and `decoding="async"` to prevent main-thread blocking during DOM parsing.
+- **Format:** Modern formats required. Serve `WebP` or `AVIF` formats first using the `<picture>` tag with `jpeg`/`png` fallbacks.
+
+---
+
+## 14. CSS Performance Rules
+
+To ensure sustained 60fps scrolling and near-zero interaction latency (INP), the following advanced CSS performance APIs must be enforced.
+
+### Layout Shift & Scroll Management
+- **Scrollbar Gutter:** To prevent horizontal layout jumping when dynamic content triggers vertical scrollbars, the app root must apply `@supports (scrollbar-gutter: stable) { html { scrollbar-gutter: stable; } }`.
+- **Containment:** For deeply nested lists (e.g., infinite course results), apply `contain: content;` to isolate layout recalculations. 
+
+### Render Prioritization
+- **Content Visibility:** For heavy below-the-fold components (e.g., long lists of student reviews, or complex D3 grade charts), apply `content-visibility: auto;`.
+- **Intrinsic Size:** When using `content-visibility: auto;`, you MUST provide a fallback `contain-intrinsic-size` (e.g., `contain-intrinsic-size: 0 400px;`) to prevent scrollbar thrashing and maintain consistent document height before rendering.
+
+### Hardware Acceleration Protocol
+- **Will-Change Strictness:** Use `will-change` strictly and ONLY for `opacity` and `transform` properties on elements that are actively animating (e.g., `will-change: transform;`).
+- Do NOT use `will-change` globally or on layout properties like `width`, `top`, or `margin`, as it consumes excessive GPU memory. Remove `will-change` dynamically once the animation concludes, or relegate it exclusively to hover/focus pseudo-classes.
+- **Transform Compositing:** Prefer `transform: translate3d(x, y, z)` over `translate(x, y)` to force hardware acceleration on complex DOM structures.
