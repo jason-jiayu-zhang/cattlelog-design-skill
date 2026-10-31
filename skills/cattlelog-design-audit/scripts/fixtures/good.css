@@ -1,0 +1,2 @@
+@supports (scrollbar-gutter: stable) { html { scrollbar-gutter: stable; } }
+.card { padding: 16px; z-index: 200; }
