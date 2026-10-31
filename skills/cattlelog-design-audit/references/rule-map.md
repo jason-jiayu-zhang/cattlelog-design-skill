@@ -25,12 +25,23 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 | `a11y/dialog-label` | warn | DESIGN §3 | `role="dialog"` without `aria-labelledby`/`aria-label` |
 | `a11y/clickable-div` | warn | Rule 5 | `onClick` on div/span/li/td with no `role` |
 | `layout/z-index` | error | DESIGN §9 | z-index not in -10, 0, 10, 100, 200, 300, 400, 500, 600 |
+| `a11y/contrast` | error / warn | Rule 1, DESIGN §1 | `bg-<token>` and `text-<token>` on one line: error below 3:1, warn below 4.5:1 unless the line looks like large text |
+| `a11y/low-contrast-text` | warn / review | Rule 1, DESIGN §1 | `text-<token>` with no background on the line that is under 4.5:1 on white (warn under 3:1, review 3-4.5:1) |
+| `motion/transition-all` | warn | Rule 7, DESIGN §4.3 | `transition-all` / `transition: all` |
+| `motion/arbitrary-duration` | error | Rule 7 | `duration-[420ms]` |
+| `motion/off-scale-duration` | warn | Rule 7, DESIGN §4.2 | Tailwind `duration-N`, CSS `transition`/`animation` times, or Framer `duration:` not in the `motion.duration` tokens (75/100/150/200/300/1500ms) |
+| `motion/custom-easing` | warn | Rule 7 | `ease-[...]`, `cubic-bezier()` |
+| `motion/decorative-loop` | warn | Rule 7, DESIGN §4.1 | `animate-bounce`, `animate-ping`, `animate-spin` |
+| `motion/layout-property` | warn | Rule 7, DESIGN §14 | Transition on width/height/top/left/right/bottom/margin/padding/inset |
+| `motion/reduced-motion` | warn | Rule 7, DESIGN §4.5 | Motion used but no `prefers-reduced-motion` / `motion-reduce:` / `useReducedMotion` anywhere (project-level) |
 
 ## Manual checks (not in the script)
 
 | Area | Source | How to check |
 |------|--------|--------------|
-| Text/background contrast | Rule 1, DESIGN §1 | Resolve each pair to hex via `tokens.json` and compute the ratio: 4.5:1 normal text, 3:1 large text and UI. Light fills take dark text. |
+| Text/background contrast beyond one-line pairs | Rule 1, DESIGN §1 | The script only sees token pairs on the same line. For pairs split across wrappers or lines, use `node scripts/contrast.mjs <fg> <bg>` (or `--matrix`, or `--documented` for the pairs DESIGN.md prescribes). 4.5:1 normal text, 3:1 large text and UI. Light fills take dark text. |
+| Does the motion earn its place? | DESIGN §4.1 | Each animation must explain a change (something appeared, moved, was confirmed). Enters ease-out and are slower than exits; one loud animation at a time; stagger capped at 5 items. |
+| Reduced-motion actually degrades | DESIGN §4.5 | Movement drops to instant or opacity-only; skeleton pulse stops. |
 | Focus trapping and restoration | Rule 4, DESIGN §3 | Read the overlay implementation: Tab wraps, Shift+Tab wraps, focus returns to the trigger on close. |
 | ARIA wiring | Rule 5, DESIGN §3 | `aria-controls`/`aria-labelledby` ids resolve; combobox `aria-expanded` toggles; live regions use `polite`/`assertive` as specified; roving tabindex. |
 | Interactive states | SKILL.md checklist, DESIGN §11 | Buttons/links have hover, active, focus and disabled states. |
@@ -45,3 +56,6 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 - Token-definition files (`tailwind.config.*`, `tokens.*`) are skipped for raw hex, since that's where hex values belong.
 - `fixtures/`, `node_modules/`, `dist/`, `build/`, `.next/` and similar directories are skipped.
 - Spacing checks use the Tailwind default 4px unit.
+- Comment-only lines are ignored. Contrast pairs are only checked when exactly one `bg-` and one `text-` token appear on the same line (hover/dark/other prefixed variants are not paired).
+- Motion durations come from `tokens.json` -> `motion.duration`, which is consolidated from DESIGN.md values and is not Figma-verified.
+- A CSS custom property whose name is a token (`--blue-500: #6DAEDF`) is exempt from `color/raw-hex`.
