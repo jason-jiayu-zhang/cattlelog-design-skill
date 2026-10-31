@@ -11,16 +11,15 @@ Build deterministic, highly accessible, and visually stunning UI components for 
 
 These address the most common causes of visual inconsistency and layout breakages. Violating any of these produces a rejected build.
 
-#### 1. Colors: Never use primitive hex codes
-Do not use raw colors like `#6DAEDF` or generic tailwind classes like `blue-500` for structural elements.
-**ALWAYS map primitives to semantic tokens** for deterministic light/dark mode rendering.
-- `bg-surface-base`: Light Mode `black-0` | Dark Mode `black-1000`
-- `text-primary`: Light Mode `black-1000` | Dark Mode `black-0`
-- *See DESIGN.md Section 1 for the full map.*
+#### 1. Colors: Never use raw hex codes or generic palette classes
+Do not use raw colors like `#6DAEDF` or generic Tailwind classes like `blue-500` from Tailwind's default palette. Use the Cattlelog tokens in `design.md` (e.g. `blue-700`, `black-1000`, `surface-1`, `ge-ah`).
+- The app is **light-mode only**. Do not add dark-mode variants, `dark:` classes or theme toggles.
+- Text/background pairs must meet WCAG AA (4.5:1 normal, 3:1 large and UI). Light fills take dark text.
+- *See DESIGN.md Section 1 for the full palette and contrast rules.*
 
-#### 2. Typography & Layout: Use Rem-based 8pt scales
-- **Spacing**: Use standard flex/grid gaps (`gap-4`, `gap-6`, `p-4`). Arbitrary pixel padding (e.g., `p-[21px]`) is forbidden.
-- **Typography**: Adhere to the established Figtree scale (Heading 1 through Subtext). Do not invent intermediate font sizes.
+#### 2. Typography & Layout: Use the defined scales
+- **Spacing**: Use only the spacing scale (4, 8, 12, 16, 24, 32, 40, 64, 96px, e.g. `gap-4`, `p-6`). Arbitrary pixel padding (e.g., `p-[21px]`) is forbidden.
+- **Typography**: Adhere to the established Figtree scale (Heading 1 through Subtext). Do not invent intermediate font sizes or set custom letter-spacing.
 
 #### 3. Image & Layout Stability: Prevent CLS
 - Images and containers MUST declare a rigid `aspect-ratio` (e.g. `1/1` for avatars, `16/9` for banners).
@@ -34,6 +33,12 @@ Do not use raw colors like `#6DAEDF` or generic tailwind classes like `blue-500`
 - Browser default focus rings are strictly banned (`outline-none`). Implement custom `:focus-visible` parameters (e.g., `outline-2 outline-offset-2 outline-gold-500`).
 - Use the strict ARIA roles map: `role="navigation"`, `role="search"`, `role="dialog"`, etc. Do not rely on generic `div` semantics for interactive widgets.
 
+#### 6. Off-token values: flag, don't guess
+Figma sometimes contains raw, unbound values (a hex with no variable, an odd radius, a one-off font size). When a value you need isn't in `design.md` or `resources/tokens.json`:
+- Never copy the raw value into code, and never silently "round" it to a token that looks similar.
+- Use an existing token only if the difference is imperceptible (same hue, within about one scale step); otherwise stop, name the node and the value, and ask whether to bind a new token in Figma or use an existing one.
+- Only values bound to Figma variables, or already listed in the token files, count as verified. Label anything else "unverified".
+
 ---
 
 ## Token Lookup
@@ -46,20 +51,22 @@ For detailed patterns, read the relevant section in `references/DESIGN.md` BEFOR
 
 | Topic | Reference |
 |-------|-----------|
-| Colors & Semantic Tokens | `references/DESIGN.md` (Section 1) |
-| Grid, Shell Architecture, & Layout | `references/DESIGN.md` (Section 2) |
+| Colors, Contrast, GE tags & Shadows | `references/DESIGN.md` (Section 1) |
+| Grids, Shell & Responsive/Mobile Layout | `references/DESIGN.md` (Section 2) |
 | Typography, Truncation & Accessibility | `references/DESIGN.md` (Section 3) |
 | Motion, Skeletons & Micro-interactions | `references/DESIGN.md` (Section 4) |
 | Empty States, Errors & Scrollbars | `references/DESIGN.md` (Section 5) |
 | Form Controls Anatomy | `references/DESIGN.md` (Section 6) |
 | Data Visualization Colors | `references/DESIGN.md` (Section 7) |
-| Toasts, Badges & Feedback | `references/DESIGN.md` (Section 8) |
+| Toasts, Modals, Chips & Rating Badge | `references/DESIGN.md` (Section 8) |
 | Z-Index Scale | `references/DESIGN.md` (Section 9) |
-| Navigation (Topnav/Sidebar) | `references/DESIGN.md` (Section 10) |
+| Navigation (Header/Footer are prebuilt) | `references/DESIGN.md` (Section 10) |
 | Interaction State Machine | `references/DESIGN.md` (Section 11) |
 | Tooltips & Popovers | `references/DESIGN.md` (Section 12) |
-| Image & Asset Optimization | `references/DESIGN.md` (Section 13) |
+| Images, Lucide Icons & Assets | `references/DESIGN.md` (Section 13) |
 | CSS Performance Rules | `references/DESIGN.md` (Section 14) |
+| Course Page Pattern (incl. mobile) | `references/DESIGN.md` (Section 15) |
+| Logo & Voice | `references/DESIGN.md` (Section 16) |
 
 ---
 
@@ -67,12 +74,15 @@ For detailed patterns, read the relevant section in `references/DESIGN.md` BEFOR
 
 Verify EVERY item before delivering UI code:
 
-- [ ] Used semantic color tokens (`bg-surface-base`, `text-primary`) instead of primitives.
-- [ ] Layout adheres to the 8pt scale (e.g., `gap-4`, `p-6`) without arbitrary pixels.
-- [ ] Focus rings are custom (`:focus-visible`) and default outlines are removed.
-- [ ] Z-index values are selected from the 10-step scale (0, 10, 100, 200, etc.).
-- [ ] Skeletons mimic content structure and use the mandated alternating pulse durations.
-- [ ] Modals and dialogs use explicit ARIA tags (`role="dialog"`, `aria-modal="true"`).
-- [ ] Buttons and links implement Hover, Active, Focus, and Disabled states.
+- [ ] Only Cattlelog tokens: no raw hexes, no generic Tailwind palette classes, no dark-mode code.
+- [ ] Any off-token Figma value was flagged, not guessed.
+- [ ] Text/background pairs meet WCAG AA; color is never the only signal.
+- [ ] Spacing, radius, type and z-index come from the defined scales.
+- [ ] Layout works on mobile first: single column, 44px touch targets, 16px input text.
+- [ ] Focus rings are custom (`:focus-visible`); overlays trap and restore focus and use portals.
+- [ ] Modals/dialogs carry `role="dialog"`, `aria-modal="true"`, `aria-labelledby`.
+- [ ] Buttons and links implement Hover, Active, Focus and Disabled states; one primary per view.
+- [ ] Shadows use `shadow-subtle` / `shadow-fair` / `shadow-strong`.
+- [ ] Skeletons mirror content structure; images declare `aspect-ratio`.
 - [ ] Text truncation applies `break-words` and `line-clamp` explicitly.
-- [ ] Images enforce a strict `aspect-ratio` to prevent layout shifts.
+- [ ] Icons are Lucide only; header and footer are the prebuilt components.

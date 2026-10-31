@@ -1,490 +1,332 @@
 # Davis Cattlelog - Design System & UI Guidelines
 
-This document serves as the single source of truth for all UI, UX, styling, accessibility, and motion guidelines across the Davis Cattlelog web app and its companion Chrome extension. All values are derived from our central Figma brand identity.
+Single source of truth for UI, UX, styling, accessibility, and motion across the Davis Cattlelog web app and its companion Chrome extension. Values are verified against the Cattlelog Figma file. The app is **light-mode only**: do not build dark-mode variants, `dark:` classes, or theme toggles.
+
+Figma-bound variables and the values in this file are the only verified values. See SKILL.md rule 6 for what to do when a design shows something that isn't here.
 
 ## 1. Visual Identity & Color System
 
-The Davis Cattlelog leverages a cohesive palette heavily indexing on our distinct brand blues and golds, contrasted against accessible neutral blacks.
+Cattlelog's palette is brand blue and gold over accessible neutral blacks.
 
-### Brand Colors (Cattlelog Blue & Gold)
-**Cattlelog Blue (Primary):**
-- `blue-50`: `#F9FAFB`
-- `blue-200`: `#EAF3FA`
-- `blue-300`: `#C0DCF1`
-- `blue-400`: `#97C5E8`
-- `blue-500`: `#6DAEDF` (Brand Base)
-- `blue-600`: `#4397D5`
-- `blue-700`: `#206192`
-- `blue-800`: `#164263`
-- `blue-900`: `#0E2A3F`
-- `blue-1000`: `#050E15`
+### Brand Colors
+**Cattlelog Blue (primary):** `blue-50` `#F9FAFB`, `blue-200` `#EAF3FA`, `blue-300` `#C0DCF1`, `blue-400` `#97C5E8`, `blue-500` `#6DAEDF`, `blue-600` `#4397D5`, `blue-700` `#206192`, `blue-800` `#164263`, `blue-900` `#0E2A3F`, `blue-1000` `#050E15`.
 
-**Cattlelog Gold (Accent):**
-- `gold-50`: `#FFF5E5`
-- `gold-200`: `#FFE2B3`
-- `gold-300`: `#FFC363`
-- `gold-400`: `#FFBA4D`
-- `gold-500`: `#FFA71A` (Accent Base)
-- `gold-600`: `#E68D00`
-- `gold-700`: `#B36E00`
-- `gold-800`: `#804E00`
-- `gold-900`: `#4D2F00`
-- `gold-1000`: `#1A1000`
+**Cattlelog Gold (accent):** `gold-50` `#FFF5E5`, `gold-200` `#FFE2B3`, `gold-300` `#FFC363`, `gold-400` `#FFBA4D`, `gold-500` `#FFA71A`, `gold-600` `#E68D00`, `gold-700` `#B36E00`, `gold-800` `#804E00`, `gold-900` `#4D2F00`, `gold-1000` `#1A1000`.
+
+**Roles:** `blue-800` is the brand primary (page chrome, header/footer, active toggles, brand links). `blue-700` is the fill for primary buttons. `blue-50` is the page background and `black-0` is the card/surface color.
 
 ### Neutral Palette
-- `black-0`: `#FFFFFF`
-- `black-50`: `#F2F2F2`
-- `black-200`: `#D9D9D9`
-- `black-300`: `#BFBFBF`
-- `black-400`: `#A6A6A6`
-- `black-500`: `#8C8C8C`
-- `black-600`: `#737373`
-- `black-700`: `#595959`
-- `black-800`: `#404040`
-- `black-900`: `#262626`
-- `black-1000`: `#181818` (Primary Text/Background)
+`black-0` `#FFFFFF`, `black-50` `#F2F2F2`, `black-200` `#D9D9D9`, `black-300` `#BFBFBF`, `black-400` `#A6A6A6`, `black-500` `#8C8C8C`, `black-600` `#737373`, `black-700` `#595959`, `black-800` `#404040`, `black-900` `#262626`, `black-1000` `#181818` (primary text).
 
 ### Semantic & Status Colors
-- **Success:** `green-500` (`#3E8D40`) / `lime-500` (`#76AF50`)
-- **Warning:** `yellow-500` (`#E7C756`) / `orange-500` (`#E0A846`)
-- **Error/Destructive:** `red-500` (`#E05346`) / `pink-500` (`#D97575`)
-- **Info:** `blue-500` (`#6DAEDF`)
-- **Logo Pink:** `pink-500` (`#D97575`) / `pink-250` (`#F5A0A2`)
+- **Success:** `green-500` `#3E8D40` / `lime-500` `#76AF50`
+- **Warning:** `yellow-500` `#E7C756` / `orange-500` `#E0A846`
+- **Error:** `red-500` `#E05346` / `pink-500` `#D97575`
+- **Info:** `blue-500` `#6DAEDF`
+- **Logo pink:** `pink-500` / `pink-250` `#F5A0A2`
 
-### Surface & Accent Palette (verified from Figma "Color Palette - Scales")
-Used for badge/card/tag surfaces distinct from the core brand scale — each `surface-N` pairs with the same-numbered `accent-N` for text/icon color on top of it.
-- `surface-1` `#F3EEFF` / `accent-1` `#7C3AED`
-- `surface-2` `#EFF8F8` / `accent-2` `#6AC2A9`
-- `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`
-- `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`
-- `surface-5` `#FFE5D5` / `accent-5` `#C2410C`
-- `surface-6` `#ECFEFF` / `accent-6` `#0E7490`
-- `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`
-- `surface-8` `#F1F5F9` / `accent-8` `#0F172A`
-- `surface-9` `#F0FDF4` / `accent-9` `#15803D`
-- `surface-10` `#FFF7ED` / `accent-10` `#C2410C`
+### Surface & Accent Palette
+Pastel surfaces for chips, legend items and tags; each `surface-N` pairs with the same-numbered `accent-N` for text/icons/marks on top of it.
+`surface-1` `#F3EEFF` / `accent-1` `#7C3AED`; `surface-2` `#EFF8F8` / `accent-2` `#6AC2A9`; `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`; `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`; `surface-5` `#FFE5D5` / `accent-5` `#C2410C`; `surface-6` `#ECFEFF` / `accent-6` `#0E7490`; `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`; `surface-8` `#F1F5F9` / `accent-8` `#0F172A`; `surface-9` `#F0FDF4` / `accent-9` `#15803D`; `surface-10` `#FFF7ED` / `accent-10` `#C2410C`.
 
-### General Education (GE) Category Colors (verified from Figma)
-One dedicated color per UC Davis GE requirement tag — use these (not an arbitrary accent) whenever rendering a GE badge on a course card:
-- `ge-ah` `#E11D48` (Arts & Humanities)
-- `ge-ss` `#0284C7` (Social Sciences)
-- `ge-se` `#7C3AED` (Science & Engineering)
-- `ge-acgh` `#D97706` (American Cultures, Governance & History)
-- `ge-dd` `#DB2777` (Domestic Diversity)
-- `ge-ol` `#059669` (Oral Literacy)
-- `ge-ql` `#2563EB` (Quantitative Literacy)
-- `ge-sl` `#0891B2` (Scientific Literacy)
-- `ge-vl` `#CA8A04` (Visual Literacy)
-- `ge-wc` `#EA580C` (World Cultures)
-- `ge-we` `#16A34A` (Writing Experience)
+### General Education (GE) Colors
+One color per UC Davis GE3 tag (Figma variables `Miscellaneous/Gen. Ed./*`). Use these for every GE chip dot, badge and filter. Tags split into **Topical Breadth** (3 tags) and **Core Literacies** (8 tags):
 
-*Category-name expansions above are inferred from UC Davis's public GE program naming — confirm against the product spec before using them in user-facing copy.*
+| Token | Hex | Tag | Group | Full name |
+| --- | --- | --- | --- | --- |
+| `ge-ah` | `#E11D48` | AH | Topical Breadth | Arts & Humanities |
+| `ge-se` | `#7C3AED` | SE | Topical Breadth | Science & Engineering |
+| `ge-ss` | `#0284C7` | SS | Topical Breadth | Social Sciences |
+| `ge-we` | `#16A34A` | WE | Core: Words & Images | Writing Experience |
+| `ge-ol` | `#059669` | OL | Core: Words & Images | Oral Literacy |
+| `ge-vl` | `#CA8A04` | VL | Core: Words & Images | Visual Literacy |
+| `ge-acgh` | `#D97706` | ACGH | Core: Civic & Cultural | American Cultures, Governance, & History |
+| `ge-dd` | `#DB2777` | DD | Core: Civic & Cultural | Domestic Diversity |
+| `ge-wc` | `#EA580C` | WC | Core: Civic & Cultural | World Cultures |
+| `ge-ql` | `#2563EB` | QL | Core | Quantitative Literacy |
+| `ge-sl` | `#0891B2` | SL | Core | Scientific Literacy |
 
-### Contrast Grid & Usage Rules
-- **Light Mode:** Use `black-0` to `black-50` for backgrounds. Primary text must be `black-900` or `black-1000` to meet WCAG AAA guidelines. `blue-700` and `blue-800` for primary actions.
-- **Dark Mode:** Use `black-1000` or `blue-1000` for backgrounds. Primary text must be `black-50` or `black-0`. Utilize `blue-400` and `gold-400` for vibrant accents and interactable elements.
-- **Badges/Tags:** Use `-50` or `-200` variants for backgrounds with `-800` or `-900` variants for text (e.g., a Professor Badge uses `blue-200` bg with `blue-800` text).
+GE filters mirror this grouping: a Topical Breadth section and a Core Literacies section.
+
+### Color Usage & Contrast
+- Surfaces: page `blue-50`, cards `black-0`, borders `black-200`, primary text `black-1000`, secondary text `black-600` or darker, brand actions `blue-700`, brand chrome `blue-800`.
+- **Contrast is mandatory.** Normal text needs at least 4.5:1 and large text (24px, or 18.66px bold) at least 3:1 against its actual background; UI boundaries and icons need 3:1. Check the pairing, not the token: text lighter than `black-600` (e.g. `black-400`) is never used for readable copy, and blue lighter than `blue-700` is not used for body-size text on white.
+- **Text on colored fills:** use white on dark fills (`blue-700` and darker, `red-500` and darker, `accent-*`) and `black-1000` on light fills (`yellow-500`, `orange-500`, `lime-500`, gold, pastel `surface-*`, `blue-300` and lighter). Verify the pair when unsure.
+- Never use color alone to convey meaning: pair status color with an icon or text.
+- **Badges/Tags:** pastel `surface-*` or `-50`/`-200` backgrounds with `-700` or darker text.
 
 ### Shadows / Elevation
-- `shadow-subtle`: Box shadow `0px 1px 2px #0000001A`, `0px 1px 3px #0000001A`
-- `shadow-fair`: Box shadow `0px 2px 2px -2px #00000026`, `0px 2px 5px #00000026`
-- `shadow-heavy`: Box shadow `0px 4px 4px -4px #00000026`, `0px 4px 12px #00000026`
+Each token is two stacked layers:
+- `shadow-subtle`: `0px 1px 3px 0px #0000001A, 0px 1px 1px -1px #0000001A`
+- `shadow-fair`: `0px 2px 6px 0px #00000026, 0px 2px 2px -2px #00000026`
+- `shadow-strong`: `0px 4px 12px 0px #00000026, 0px 4px 4px -4px #00000026`
+
+Resting cards use `shadow-subtle` or a border; hover `shadow-fair`; popovers, dropdowns and toasts `shadow-strong`.
 
 ---
 
 ## 2. Layout & Device Responsiveness
 
-Cattlelog relies on a fluid grid system mapped to CSS Grid/Flexbox and Tailwind CSS standards. It mandates a deterministic structural shell to prevent horizontal overflow and guarantee visual density.
+A deterministic shell prevents horizontal overflow and layout shift.
 
-### Primary Shell Grid Architecture
-The global application shell (`#root` or `#app`) MUST implement the following CSS Grid architecture:
-- **CSS Grid Setup:** `display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh;`
-- **Main Axis:** `grid-template-columns: minmax(0, 1fr);`
-- **App Bar (Header):** Fixed `height: 64px;` (desktop) / `56px` (mobile). Must utilize `position: sticky; top: 0; z-index: 200; backdrop-filter: blur(12px);`.
-- **Content Viewport:** `padding-top: var(--header-height);`.
+### Shell
+- Root: `display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; grid-template-columns: minmax(0, 1fr);`
+- **Header and Footer are prebuilt components.** Use them as-is; never rebuild or restyle them. The header is sticky (`position: sticky; top: 0; z-index: 200`); expose its height as `--header-height` and offset sticky children by it.
+- `overflow-x: hidden` on `html, body`; `padding-bottom: env(safe-area-inset-bottom)` for iOS.
 
-### Responsive Breakpoint Tokenization & Grid Structure
-- **Mobile (`xs`):** `< 640px`
-  - Container: `width: 100%; max-width: 100%;`
-  - Grid: 4 columns, `gap: 16px`
-  - Paddings: `padding-inline: clamp(16px, 4vw, 24px);`
-- **Tablet (`sm` to `md`):** `640px` to `< 1024px`
-  - Container: `max-width: 768px`
-  - Grid: 8 columns, `gap: 16px`
-  - Paddings: `padding-inline: 24px;`
-- **Desktop (`lg`):** `1024px` to `< 1280px`
-  - Container: `max-width: 1024px`
-  - Grid: 12 columns, `gap: 24px`
-  - Paddings: `padding-inline: 32px;`
-- **Widescreen (`xl` to `2xl`):** `>= 1280px`
-  - Container: `max-width: 1280px` (Strictly enforced limit to prevent infinite widening)
-  - Grid: 12 columns, `gap: 32px`
-  - Paddings: `padding-inline: 64px;`
+### Grids (Figma layout grids)
+| Breakpoint | Range | Grid | Gutter | Margin |
+| --- | --- | --- | --- | --- |
+| Mobile | `< 640px` | 4 columns | 16px | 16px |
+| Tablet | `640px` to `< 1024px` | 8 columns | 24px | 32px |
+| Desktop | `>= 1024px` | 12 columns | 32px (centered, 80px columns) or 64px (stretch) | auto (centered) / 24px (stretch) |
 
-### Fluid Container Rule & Safe Areas
-Content inside `.container` classes must NOT exceed the max container width tokens above, maintaining centered alignment with `margin-inline: auto`.
-- Apply `padding-bottom: env(safe-area-inset-bottom);` for iOS safe areas.
-- **Horizontal Overflow Zero Tolerance:** Apply `overflow-x: hidden;` to `html, body` explicitly.
+- Use the **centered** desktop grid for content pages (it caps width and centers); use **stretch** only for full-bleed app surfaces such as search/discovery panes.
+- Content never exceeds the grid's width; center with `margin-inline: auto`. Content pages such as the Course Page use a fixed 1080px content column on a 1440px canvas.
+- Spacing between elements comes only from the spacing scale (4, 8, 12, 16, 24, 32, 40, 64, 96).
 
-### Responsive Layout Patterns
-- **Mobile Experience:** 
-  - Single-column stacked layouts for on-the-go viewing.
-  - Search bar must be sticky (`sticky top-[var(--header-height)]`) to ensure immediate access.
-  - Deep filters must be placed inside collapsible accordion menus or bottom-sheet drawers (`role="dialog"`).
-  - Horizontal scrolling for data tables must include visual affordances (CSS mask-image fade-out: `mask-image: linear-gradient(to right, #000 80%, transparent);`) and `scroll-snap-type: x mandatory`.
-- **Tablet/Desktop Experience:**
-  - Utilize Split Panes for Discovery: fixed search/filter pane on the left (`width: 320px`, `flex-shrink: 0`), infinite scroll grid results on the right (`flex-grow: 1`).
-  - Course Comparison pages should utilize side-by-side card layouts using `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));`.
+### Responsive Patterns
+- **Mobile (primary design target for readability):**
+  - Single-column, stacked cards at full width; no side-by-side panels.
+  - Search is sticky below the header. Filters live in a bottom-sheet drawer (`role="dialog"`) or collapsible accordions.
+  - Secondary columns (professor lists, prerequisites) collapse below the main content as accordions.
+  - Horizontally scrolling tables/charts show a fade affordance (`mask-image: linear-gradient(to right, #000 80%, transparent)`) and `scroll-snap-type: x mandatory`.
+  - Touch targets are at least 44x44px (extend the hit area with padding if the visual is smaller), with at least 8px between adjacent targets.
+  - Inputs use 16px text to prevent iOS auto-zoom. Use the `-mobile` type tokens.
+- **Tablet/Desktop:**
+  - Split panes for discovery: filter pane left (`width: 320px`, `flex-shrink: 0`), results right (`flex-grow: 1`).
+  - Main content plus a narrow sidebar (368px) is acceptable on desktop; the sidebar stacks below the main column on tablet and mobile.
+  - Course Comparison uses `grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))`.
 
 ---
 
 ## 3. Readability & Web Accessibility (a11y)
 
-### Typography Stack
-Our primary brand font is **Figtree**. The hierarchy is explicitly defined below to prevent cognitive fatigue.
+### Typography
+Primary font is **Figtree** (no secondary typeface). Use only the tokens below; never invent an intermediate size. Apply each token's weight and line-height exactly as defined, and don't set custom letter-spacing.
 
-*Desktop / General Hierarchy (verified against Figma "Typography - Type Scale" — line heights are NOT 100%, they range ~110–150% by level; previous version of this doc had this wrong):*
-- **Heading 1:** Bold (700), 64px, Line Height 70.4px (110%), Tracking -2px
-- **Heading 2:** Bold (700), 48px, Line Height 52.8px (110%), Tracking -2px
-- **Heading 3:** Bold (700), 30px, Line Height 36px (120%), Tracking -2px
-- **Subheading 1:** Bold (700), 24px, Line Height 31.2px (130%), Tracking 0px
-- **Subheading 2:** SemiBold (600), 18px, Line Height 25.2px (140%), Tracking 0px — *note: SemiBold on desktop, but Bold on mobile (see below); previous version of this doc incorrectly said Bold on both.*
-- **Subheading 3:** Regular (400), 16px, Line Height 24px (150%), Tracking 0px
-- **Subheading 4:** Regular (400), 14px, Line Height 21px (150%), Tracking 0px
-- **Body:** Regular (400), 16px, Line Height 24px (150%), Tracking -1px
-- **Subtext:** Regular (400), 14px, Line Height 19.6px (140%), Tracking -2px
+*Desktop:*
+- **Heading 1:** Bold 700, 64px / 70.4px (110%)
+- **Heading 2:** Bold 700, 48px / 52.8px (110%)
+- **Heading 3:** Bold 700, 30px / 36px (120%)
+- **Subheading 1:** Bold 700, 24px / 31.2px (130%)
+- **Subheading 2:** SemiBold 600, 18px / 25.2px (140%)
+- **Subheading 3:** Regular 400, 16px / 24px (150%)
+- **Subheading 4:** Regular 400, 14px / 21px (150%)
+- **Body:** Regular 400, 16px / 24px (150%)
+- **Subtext:** Regular 400, 14px / 19.6px (140%)
 
-*Mobile Hierarchy (verified against Figma):*
-- **Heading 1:** Bold 700, 36px, Line Height 39.6px (110%), Tracking -2px
-- **Heading 2:** Bold 700, 30px, Line Height 36px (120%), Tracking -2px
-- **Heading 3:** Bold 700, 24px, Line Height 28.8px (120%), Tracking -2px
-- **Subheading 1:** Bold 700, 20px, Line Height 26px (130%), Tracking 0px
-- **Subheading 2:** Bold 700, 16px, Line Height 22.4px (140%), Tracking 0px
-- **Subheading 3:** Regular 400, 14px, Line Height 21px (150%), Tracking 0px
-- **Subheading 4:** Regular 400, 13px, Line Height 19.5px (150%), Tracking 0px
-- **Body:** Regular 400, 14px, Line Height 21px (150%), Tracking -1px
-- **Subtext:** Regular 400, 12px, Line Height 16.8px (140%), Tracking -2px
+*Mobile:*
+- **Heading 1:** Bold 36px / 39.6px; **Heading 2:** Bold 30px / 36px; **Heading 3:** Bold 24px / 28.8px
+- **Subheading 1:** Bold 20px / 26px; **Subheading 2:** Bold 16px / 22.4px; **Subheading 3:** Regular 14px / 21px; **Subheading 4:** Regular 13px / 19.5px
+- **Body:** Regular 14px / 21px; **Subtext:** Regular 12px / 16.8px
+
+Never set readable copy smaller than Subtext.
 
 ### Content Truncation & Line-Clamp
-- **Single-Line Truncation:** Any dynamically generated single-line string (e.g., Professor names, short titles) that risks container overflow MUST apply strictly `truncate` (maps to `overflow: hidden; text-overflow: ellipsis; white-space: nowrap;`).
-- **Multi-Line Truncation:** Long description bodies (e.g., Course Descriptions, Review text) MUST use the `-webkit-line-clamp` property. 
-  - Standard card previews: Strict limit of `line-clamp-3` (3 lines max).
-  - Compact list items: Strict limit of `line-clamp-2` (2 lines max).
-- **Tooltips on Truncation:** When `text-overflow: ellipsis` is triggered, the UI MUST supply a native `title` attribute or a custom tooltip (via `z-index: 600`) revealing the full text on hover.
-- **Word Break Control:** Always apply `break-words` alongside truncation to ensure contiguous text (like URLs) breaks gracefully and does not rupture the grid boundary.
+- **Single line:** `truncate` (`overflow: hidden; text-overflow: ellipsis; white-space: nowrap`) for names and short titles.
+- **Multi-line:** `-webkit-line-clamp`. Card previews `line-clamp-3`; compact list items `line-clamp-2`.
+- A truncated string must expose its full text via a native `title` or a tooltip.
+- Always pair truncation with `break-words` so long tokens (URLs) don't break the grid.
 
-### Strict Focus Management Strategy
-- **Focus Rings:** Browser default focus rings are strictly banned (`outline-none`). Implement custom `:focus-visible` globally on all interactive elements to prevent mouse-click focus rings.
-  - Standard focus ring: `outline outline-2 outline-offset-2 outline-gold-500` (or `blue-500` where gold clashes).
-  - Inner focus ring (for constrained spaces like table cells): `ring-2 ring-inset ring-gold-500`.
-- **Focus Trapping:** Modals, dialogs, and bottom sheets MUST trap focus within their container while open. Tabbing past the last interactive element must wrap to the first interactive element.
-- **Focus Restoration:** Upon closing a modal, dialog, or dropdown, focus MUST be programmatically returned to the element that originally triggered the overlay.
-- **Roving Tabindex:** For composite widgets (like custom toolbars, tablists, or complex comboboxes), implement a roving `tabindex`. Only the currently active element should have `tabindex="0"`; the rest must have `tabindex="-1"`. Arrow keys map strictly to focus movement within the composite widget.
-- **Skip Links:** Provide a visually hidden "Skip to Content" (`sr-only focus:not-sr-only`) anchor at the absolute top of the DOM to bypass repetitive navigation.
+### Focus Management
+- Never use bare `outline-none`. Implement `:focus-visible` on every interactive element: `outline outline-2 outline-offset-2 outline-gold-500` (use `blue-500` where gold clashes). In tight spaces (table cells) use `ring-2 ring-inset ring-gold-500`.
+- **Trap** focus inside modals, dialogs, popovers and bottom sheets; tabbing past the last element wraps to the first.
+- **Restore** focus to the trigger on close.
+- **Roving tabindex** for composite widgets (toolbars, tablists, comboboxes): one `tabindex="0"`, the rest `-1`, arrows move focus.
+- **Skip link:** a visually hidden "Skip to Content" (`sr-only focus:not-sr-only`) at the top of the DOM.
 
-### Strict ARIA & Accessibility Roles Map
-- **Navigation (`role="navigation"`):** Must be applied to all primary navigation containers. Use `aria-label="Primary Navigation"` for main headers and `aria-label="Pagination"` for list navigations.
-- **Search Regions (`role="search"`):** The global search wrapper must have `role="search"`. The internal input must include `aria-label="Search courses or professors"` and `aria-autocomplete="list"`.
-- **Modals & Dialogs (`role="dialog"`):** All overlays must use `role="dialog"`, include `aria-modal="true"`, and be labelled by `aria-labelledby` referencing the dialog's title ID.
-- **ComboBox/Dropdowns (`role="combobox"`):** All custom select inputs must implement `role="combobox"`, with `aria-expanded` strictly toggling between `true`/`false`. The listbox must have `role="listbox"`, and items within must have `role="option"` with `aria-selected` tracking selection state.
-- **Tabs (`role="tablist"`, `role="tab"`, `role="tabpanel"`):** Tabbed interfaces must rigorously map `aria-controls` from the tab to the panel ID, and `aria-labelledby` from the panel to the tab ID.
-- **Live Regions (`aria-live`):** Dynamic data updates (e.g., filter results count changes) must announce silently to screen readers using `aria-live="polite"` on a visually hidden (`sr-only`) container. Form errors must use `aria-live="assertive"`.
-- **Screen Reader Optimization:** Virtualized lists (e.g., `React Virtual`) MUST apply `aria-setsize` and `aria-posinset` dynamically. All interactive SVGs/icons must have `aria-hidden="true"` accompanied by `sr-only` descriptive text.
+### ARIA Roles
+- Primary nav `role="navigation"` with `aria-label`; pagination `aria-label="Pagination"`.
+- Global search wrapper `role="search"`; its input has `aria-label` and `aria-autocomplete="list"`.
+- Overlays: `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing at the title id.
+- Custom selects: `role="combobox"` with `aria-expanded`; list `role="listbox"`; items `role="option"` with `aria-selected`.
+- Tabs: `tablist`/`tab`/`tabpanel` with `aria-controls` and `aria-labelledby`.
+- Live regions: result-count updates `aria-live="polite"` on an `sr-only` node; form errors `aria-live="assertive"`.
+- Virtualized lists set `aria-setsize` and `aria-posinset`. Interactive icons are `aria-hidden="true"` with `sr-only` text.
 
 ---
 
-## 4. Motion Design, Animations & Micro-interactions
+## 4. Motion Design
 
-Motion should feel deliberate, premium, and inherently functional. Unnecessary movement is discouraged.
+Motion is deliberate and functional. Respect `prefers-reduced-motion`: replace movement with instant or opacity-only changes.
 
-### Page Transitions
-- Utilize **React 19 View Transitions API** (or Framer Motion fallback) for navigating between the Landing Page, Home Page, and Professor Pages.
-- Use a slight cross-fade and scale-up (`scale(0.98)` to `scale(1)`) to create a continuous depth effect, matching the modern, snappy personality.
-
-### Search Interactions
-- The `CourseSearchBar` must transition smoothly when focused: expand its width dynamically or drop down a blurred overlay (`backdrop-blur-md`) over the background content to isolate the search experience.
-- Input should have a micro-delay (`150ms`) expanding into its active state.
-
-### Async Loading States & Skeleton Constraints
-- **Skeleton Screens:** Do NOT use spinners for full-page loads. Use skeleton placeholders that trace the exact layout of the incoming data.
-- **Skeleton Pulse Animation:** Must use a localized pulse animation (`animate-pulse`). Keyframes must alternate strictly between `bg-black-100` (opacity 1) and `bg-black-200` (opacity 0.6) with exactly a `1.5s` duration, ease-in-out curve.
-- **Placeholder Widths & Sizing:**
-  - Header placeholders: Fixed height of `32px` (`h-8`), width randomized deterministically between `40%` and `60%` (e.g., `w-[45%]`).
-  - Text line placeholders: Fixed height of `16px` (`h-4`). 
-  - For multi-line paragraphs, the last line must always be exactly `w-[70%]` or `w-[80%]` to simulate natural ragged right text. Never use `w-full` for all lines.
-  - Border radius on all text skeletons must strictly be `4px` (`rounded`).
-- **Staggered Fade-Ins:**
-  - Skeletons rendering multiple cards (e.g., list views) MUST stagger their entrance or pulse phase. Delay each subsequent card skeleton by exactly `75ms` (`animation-delay: 75ms`, `150ms`, `225ms`) to create a cascading loading effect.
-  - Upon data resolution, the transition from skeleton to actual content must use an explicit cross-fade: content fades in with `duration-300` `ease-out`, while skeleton fades out over `duration-150` `ease-in`.
-- **Mascot Integration:** For deeper processing states exceeding `1000ms`, utilize the brand mascot ("Cory the Cow") dynamically (e.g., walking or chewing cud) centered in the viewport with a `150ms` delay before appearance to prevent flash-of-loading state.
-
-### Micro-delights
-- **Favoriting a Course:** Trigger a distinct elastic scale bounce (e.g., Framer Motion `spring` physics: `stiffness: 400, damping: 10`) on the star/heart icon.
-- **Rating Components:** Stars should highlight progressively on hover.
-- **Premium Glows:** Highly-rated courses/professors should receive a subtle pulse or radial glow (`shadow-gold-300/30`) on hover to draw attention visually.
+- **Page transitions:** cross-fade with `scale(0.98)` to `scale(1)` (View Transitions API, Framer Motion fallback).
+- **Search focus:** the search bar expands or dims the background with `backdrop-blur-md`, with a `150ms` delay into the active state.
+- **Skeletons (no spinners for page loads):**
+  - Skeletons trace the incoming layout exactly. Pulse between `black-50` and `black-200` over `1.5s` ease-in-out (`animate-pulse`).
+  - Header placeholders `32px` tall at 40-60% width; text lines `16px` tall; the last line of a paragraph is `70%` or `80%` wide; radius `4px`.
+  - Stagger list skeletons by `75ms` per item.
+  - Content fades in (`300ms ease-out`) as the skeleton fades out (`150ms ease-in`).
+- **Long waits (> 1000ms):** show the mascot, "Cory the Cow", centered after a `150ms` delay to avoid flicker.
+- **Micro-interactions:** favoriting uses a spring bounce (`stiffness: 400, damping: 10`); ratings highlight progressively on hover; tooltips are `100ms`, no bounce.
 
 ---
 
-## 5. Niche & Often-Missed Dashboard UI Details
+## 5. States, Scrolling & Layout Stability
 
-### CLS (Cumulative Layout Shift) Protection
-- **Skeleton Heights:** Charts, especially Grade Distribution visualizations, must pre-allocate standard `min-height` parameters before the async data returns.
-- **Scrollbar Architecture:**
-  - **Global Gutter:** Apply `scrollbar-gutter: stable` (or `overflow-y: scroll`) at the `<html/>` or `<body/>` root to explicitly prevent horizontal Cumulative Layout Shift (CLS) when dynamic content triggers a vertical scrollbar.
-  - **Custom Scrollbars:** Default browser scrollbars must be visually suppressed or stylized to match the brand. WebKit pseudo-elements (`::-webkit-scrollbar`, `::-webkit-scrollbar-thumb`) must be customized using `black-200` for track and `black-400` (hover `black-500`) for thumb.
-  - **Hide Scrollbar Rule:** For nested horizontal scrolling (like pill filter lists), explicitly hide the scrollbar (`scrollbar-width: none` & `::-webkit-scrollbar { display: none; }`) to maintain a clean UI, but ensure affordances (gradient masks/arrows) remain.
-- **Scroll Snap Rules:**
-  - **Horizontal Carousels:** Must enforce `snap-x` and `snap-mandatory` on the scrolling container. Child items must enforce `snap-center` or `snap-start` to ensure the view strictly rests on complete items, preventing halfway crops.
-  - **Overscroll Behavior:** Set `overscroll-behavior: contain` on nested scrolling regions (e.g., side panels or dropdowns) to prevent scroll chaining (accidentally scrolling the main page when reaching the end of the dropdown).
+### Layout Shift (CLS) Protection
+- Charts and other async regions pre-allocate `min-height` before data arrives.
+- **Scrollbar gutter:** `@supports (scrollbar-gutter: stable) { html { scrollbar-gutter: stable; } }`.
+- **Custom scrollbars:** style `::-webkit-scrollbar` with a `black-200` track and `black-400` thumb (hover `black-500`). Hide scrollbars on nested horizontal pill lists (`scrollbar-width: none`) but keep a gradient/arrow affordance.
+- **Scroll snap:** horizontal carousels use `snap-x snap-mandatory` with children `snap-start` or `snap-center`.
+- **Overscroll:** `overscroll-behavior: contain` on nested scroll regions.
 
-### State Visualizations
-- **Empty States Anatomy:** 
-  - **Container:** Must use `flex flex-col items-center justify-center` with `min-h-[300px]` and a `padding` of exactly `64px` (`p-16`).
-  - **Illustration:** Strict dimensions of `160px` by `160px`. Must use a desaturated brand illustration (e.g., Cory the Cow looking confused), opactiy strictly set to `60%`.
-  - **Heading (Text):** Must use Heading 3 (`text-[30px] font-bold leading-tight tracking-tight`) mapped to `black-900`. Margin top strictly `24px` (`mt-6`).
-  - **Description (Text):** Must use Body (`text-[16px] font-normal leading-relaxed`) mapped to `black-600`. Max width must be constrained to `400px` (`max-w-[400px]`), aligned `text-center`. Margin top strictly `12px` (`mt-3`).
-  - **Call-to-Action:** Secondary button array (e.g., "Clear Filters") strictly separated by `16px` (`gap-4`), placed exactly `32px` (`mt-8`) below the description.
-- **Error States (404/500/Boundary):** 
-  - Do not expose raw stack traces. 
-  - Must render a standardized ErrorCard component.
-  - **Card Container:** `max-w-[480px] w-full p-8 rounded-xl border border-red-200 bg-red-50`.
-  - **Error Title:** Heading 3, `text-red-700`.
-  - **Error Code:** Must be visible in Subtext (`14px`) `text-red-500 font-mono mt-2`.
-  - **Fallback Action:** "Return Home" or "Try Again" button using `bg-red-600 hover:bg-red-700 text-white rounded-lg px-4 py-2 mt-6`.
-- **Offline / Network Interruption:** Implement a subtle sticky banner (`bg-yellow-500 text-black-900 h-[40px] flex items-center justify-center text-[14px] font-bold shadow-subtle z-500`) at the top of the viewport when `navigator.onLine` is false.
+### Empty State
+`flex flex-col items-center justify-center`, `min-h-[300px]`, `p-16` (64px). Illustration `160x160` (desaturated Cory), `60%` opacity. Heading: Heading 3 in `black-900`, `mt-6`. Description: Body in `black-600`, `max-w-[400px]`, centered, `mt-3`. Actions: secondary buttons with `gap-4`, `mt-8` below the description.
 
-### Thematic Flourishes
-- While adhering to strict academic utility, incorporate playful brand touches. Hover states on secondary buttons might slide in a subtle cow print pattern at 5% opacity.
-- Tooltips and small floating labels should be snappy (`100ms` duration) with no bounce, preserving a highly functional tone.
+### Error State (404/500/boundary)
+Never expose stack traces. Render the ErrorCard: `max-w-[480px] w-full p-8 rounded-xl` (12px), `surface-3` fill with a `1px red-500` border; title Heading 3 in `black-1000`; error code in Subtext monospace `red-500` (`mt-2`); a primary button ("Try Again" / "Return Home") `mt-6`. Structure is always Error Title, Error Description, Solution CTA, with the Cory emote illustration.
+
+### Offline
+When `navigator.onLine` is false show a sticky banner (`bg-yellow-500 text-black-1000 h-[40px]`, Subtext bold, `shadow-subtle`, `z-500`) at the top.
 
 ---
 
-## 6. Form Controls Anatomy
+## 6. Form Controls
 
-### Text Inputs & Selects
-- **Height Definitions:** Medium `40px` (Default), Large `48px`, Small `32px`.
-- **Padding:** `0px 12px` strictly.
-- **Border:** `1px solid black-200` (Light Mode), `1px solid black-800` (Dark Mode).
-- **Border Radius:** `8px` (`rounded-lg`).
-- **Typography:** Body Regular 16px to prevent iOS auto-zoom on focus.
-- **States:**
-  - *Hover:* Border darkens to `black-400`.
-  - *Focus:* Border transforms to `blue-500`, accompanied by a `0 0 0 2px blue-200` outer box-shadow.
-  - *Disabled:* Background `black-50`, Text `black-400`, Cursor `not-allowed`.
+### Text Inputs
+- **Heights:** Small `32px`, Medium `40px` (default), Large `48px`. Inline padding `px-16`. Radius `8px`.
+- **Fill / border:** `blue-50` fill, `1px solid black-200`. Text is Body; **16px minimum on mobile** (prevents iOS zoom). Placeholder `black-600`.
+- **Labels:** Subtext Bold above the field (`mb-1`), always visible (placeholders are not labels).
+- **States:** Hover border `black-400`. Focus: `black-0` fill, border `blue-500`, plus a `0 0 0 2px blue-200` ring. Error: `1.5px pink-500` border on a `surface-3` fill, label and helper text in `pink-500`, helper text below the field linked with `aria-describedby`, plus `aria-invalid="true"`. Disabled: fill `black-50`, text `black-400`, `cursor: not-allowed`.
 
-### Checkboxes & Radios
-- **Size:** Exactly `16x16px`.
-- **Border Radius:** `4px` for checkboxes, `50%` for radios.
-- **Checked State:** Background `blue-500`, Border `blue-500`, SVG Checkmark `black-0`.
+### Selects & Multi-select
+- Standard select: `32px` tall, `6px` radius, `px-3`, chevron icon 16px.
+- Multi-select tag field: `1px black-400` border, `8px` radius, leading search icon (20px), selected values as removable `surface-N` pills (`8px` radius, 8px dot, label, 12px close icon), trailing chevron (20px). Close buttons are keyboard focusable with `aria-label="Remove <value>"`.
+- Type switcher ("Courses" | "Professors"): pill, `black-200` fill, 20px leading icon + label + chevron. A segmented toggle (36px tall pill, white track, active segment `blue-800` fill with white text) is used for two-way mode switches.
 
----
-
-## 7. Data Visualization Tokens
-
-### Chart & Graph Colors
-To guarantee visual consistency in grade distributions and analytic graphs:
-- **Sequential (Blue Scale):** `blue-300` -> `blue-500` -> `blue-700` -> `blue-900`.
-- **Diverging (Bad to Good):** `red-500` -> `black-200` -> `green-500`.
-- **Categorical (Max 5 items):**
-  1. `blue-500`
-  2. `gold-500`
-  3. `green-500`
-  4. `#8A4285` (Brand Purple Extension) — *unverified: not found among the Figma variables pulled from the Color Palette pages; either an unbound raw fill in a specific chart or a leftover placeholder. Confirm before relying on it, or substitute `accent-1` (`#7C3AED`), which is a verified purple token.*
-  5. `orange-500`
-- **Tooltips (Data viz):** Background `black-900`, Text `black-0`, Padding `8px 12px`, Border-radius `4px`, `pointer-events: none`, Z-index `600`.
+### Checkboxes, Radios & Toggles
+- Checkbox / radio: exactly `18x18px`; checkbox radius `4px`, radio `50%`. Unchecked: `1.5px black-600` border. Checked: `blue-700` fill and border with a white check/dot.
+- Toggle switch: `40x22px`; on = `blue-700`, off = `black-300`; label to its right with `gap-3`. Use `role="switch"` and `aria-checked`.
+- On mobile, wrap each control and its label in a 44px-high row so the whole row is the hit area.
 
 ---
 
-## 8. Status & Feedback Elements
+## 7. Data Visualization
 
-### Toasts / Snackbars
-- **Dimensions:** Width `min(300px, calc(100vw - 32px))`, max `400px`.
-- **Padding:** `16px` uniform.
-- **Border Radius:** `8px`.
-- **Elevation:** `shadow-heavy`.
-- **Motion:** Slide in from bottom-right (`transform: translateY(100%)` to `0`, Opacity `0` to `1` over `200ms` ease-out).
-- **Anatomy (Success):** Left border `4px solid green-500`, Background `black-0`, Icon `green-500`.
+- **Sequential:** `blue-300` to `blue-500` to `blue-700` to `blue-900`. **Diverging (bad to good):** `red-500` to `black-200` to `green-500`.
+- **Categorical (max 5 series), in order:** `accent-1`, `accent-4`, `accent-9`, `accent-5`, `accent-6`. A single-series chart uses `accent-1`. Legend chips use the paired `surface-N` fill with an 8px dot in the series color.
+- **Marks:** bars are narrow (about 8px wide) with a `2px` top radius, anchored to the baseline; lines are 2px strokes with small point dots. Gridlines are 1px `black-200`; axis labels use Subtext in `black-600`; y-axis ticks at 0/25/50/75/100% for percentage charts.
+- **Tooltip:** `black-0` background, `1px black-200` border, `8px` radius, `p-3`, `pointer-events: none`, `z-index: 600`; bold title plus rows of dot + series name + value. Tooltips are also reachable by keyboard focus on the mark.
+- **Accessibility:** every chart has a text summary or data-table alternative (`aria-label` plus a visually hidden table). Never rely on color alone: series are also distinguished by legend label.
+- **Mobile:** keep tick labels legible (thin them out rather than shrinking text); let wide charts scroll horizontally inside their card with a fade affordance.
 
-### Badges / Tags
-- **Dimensions:** Height `24px`.
-- **Padding:** `0 8px`.
-- **Typography:** Subtext Regular 14px or Mobile Subtext 12px Bold.
-- **Border Radius:** `9999px` (Pill format).
-- **Colors:** Derived from semantic scale. Default: `blue-50` background, `blue-800` text.
+---
+
+## 8. Status & Feedback
+
+### Toasts
+- **Placement:** top-right of the viewport (full-width minus 16px margins on mobile). Stack with `12px` gaps, newest on top; show at most 3 at once and queue the rest.
+- **Size & look:** `360px` wide (`min(360px, calc(100vw - 32px))`), `p-4`, `8px` radius, `black-0` background, `shadow-strong`, `z-index: 500`.
+- **Anatomy:** a `4px` left border in the status color (`green-500` success, `red-500` error, `yellow-500` warning, `blue-500` info), a Lucide status icon in that color, message text (Body, wraps), an optional one-line `DETAILS` expander, and a close button (24px).
+- **Timing:** success `3s`, error `6s`; banners that demand action are sticky. Pause the timer on hover and keyboard focus; never auto-dismiss something the user is interacting with.
+- **Motion:** slide in from the top-right edge with opacity `0` to `1` over `200ms` ease-out; reverse on exit.
+- **Accessibility:** `role="status"` (polite) for success/info and `role="alert"` for errors. A toast is never the only path to an action; offer a persistent alternative.
+- **Copy:** short and specific ("Course successfully bookmarked!", "Failed to submit review. Try again.").
+
+### Modals / Dialogs
+- Backdrop: `black-1000` at `25%` opacity (full screen). Container: `black-0`, `16px` radius, `24px` inner padding, `z-index: 400`.
+- Sizes: Small `360px` (confirmations), Medium `480px` (default; forms, metadata), Large `640px` (comparison, configuration).
+- Actions: primary on the trailing edge (bottom-right), secondary Cancel beside it. Escape closes; focus is trapped and restored.
+- **Mobile:** modals become full-width bottom sheets with the same content and a visible close affordance.
+
+### Chips, Badges & Rating Badge
+- **Tag/GE chip:** `black-0` fill, `0.5px black-200` border, `8px` radius, `px-2 py-1`, an 8px colored dot (the tag's `ge-*` token) and a Subtext or Body label, `gap-1.5`.
+- **Trait chip:** `black-50` fill, `8px` radius, `px-2 py-1`, Subtext Medium in `black-700`.
+- **Quarter/term chip:** `blue-300` fill, `6px` radius, `black-1000` text.
+- **Status badge:** pill (`9999px`), Subtext; pastel `surface-*` background with `accent-*` text.
+- **Rating badge:** a rounded square (`8-12px` radius) with the score in Bold, filled by score: `green-500` high, `yellow-500` mid, `red-500` low. Text color follows the contrast rule (dark text on yellow). Sizes: 64px (page hero), 48px (list rows), 36px (inline). Always render the number so color is never the only signal.
 
 ---
 
 ## 9. Z-Index Scale
 
-### Strict Layering Architecture
-Never use arbitrary z-index values (e.g., `99999`). Adhere to the following deterministic scale:
-- **Background Elements:** `-10`
-- **Base Content:** `0`
-- **Elevated Content (Cards):** `10`
-- **Dropdowns / Popovers:** `100`
-- **Sticky Headers / Navbars:** `200`
-- **Overlays / Backdrops:** `300`
-- **Modals / Dialogs:** `400`
-- **Toasts / Notifications:** `500`
-- **Tooltips:** `600`
+Never use arbitrary z-index values. Background `-10`, base `0`, cards `10`, dropdowns/popovers `100`, sticky headers `200`, overlays/backdrops `300`, modals `400`, toasts `500`, tooltips `600`.
 
 ---
 
-## 10. Navigation Anatomy
+## 10. Navigation
 
-### 10.1 Top Navigation (Topnav) Pattern
-- **Dimensions:** 
-  - Fixed Height: `64px` across all breakpoints.
-  - Border Bottom: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
-  - Background: `rgba(255, 255, 255, 0.8)` with `backdrop-blur-md` (Light) / `rgba(24, 24, 24, 0.8)` with `backdrop-blur-md` (Dark).
-- **Positioning:** Strictly `sticky top-0` with `z-index: 200`.
-- **Layout Constraints:**
-  - Standard Grid Container: `max-w-[1280px] mx-auto`.
-  - Padding X: `16px` (Mobile), `24px` (Tablet), `32px` (Desktop).
-  - Flexbox Layout: `flex items-center justify-between`.
-- **Anatomical Regions:**
-  - **Left (Brand):** Logo lockup. Logo height `32px`, max-width `140px`. Padding right `24px`.
-  - **Center (Search/Nav):** Search bar or primary link list (`flex gap-6`). Links must use Body Regular 16px.
-  - **Right (Utility):** Profile, Theme Toggle, Notifications. Fixed gap `16px`. Icon sizes `24px`.
-
-### 10.2 Sidebar Navigation (Desktop Only)
-- **Visibility:** Visible only at `lg` breakpoint and above (`hidden lg:flex`).
-- **Dimensions:**
-  - Fixed Width: `240px` (Expanded) / `72px` (Collapsed).
-  - Height: `calc(100vh - 64px)` (Starts below Topnav).
-  - Border Right: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
-- **Padding:** `24px 16px`.
-- **Item Anatomy:**
-  - Height: `40px` per item.
-  - Border Radius: `8px`.
-  - Padding: `0 12px`.
-  - Icon: Left-aligned, `20px` width/height.
-  - Text: Body Regular 16px, `margin-left: 12px`.
-- **Selected State:**
-  - Background: `blue-50` (Light) / `blue-900` (Dark).
-  - Text/Icon Color: `blue-700` (Light) / `blue-200` (Dark).
-  - Indicator: Left border pseudo-element (`width: 4px`, `height: 20px`, `background: blue-500`, `border-radius: 0 4px 4px 0`, absolutely positioned at `left: 0`).
+- **Header and Footer** are prebuilt components. Use them; do not recreate or restyle them.
+- **In-page tabs / segmented controls:** follow the ARIA tabs map in Section 3; the active item uses `blue-800`.
+- **Mobile:** primary navigation collapses into the header's menu; every nav target is at least 44px tall.
+- **Collapsible sections (accordions):** the whole header row is the toggle, with `aria-expanded` and a chevron that rotates `180°`.
 
 ---
 
-## 11. Interaction State Machine
+## 11. Interaction States
 
-### 11.1 Global State Hierarchy
-All interactive elements (buttons, links, list items) MUST strictly follow this state precedence, from lowest to highest:
-1. `Default`
-2. `Hover` (`:hover`)
-3. `Focus` (`:focus-visible`)
-4. `Active` (`:active`)
-5. `Disabled` (`:disabled` or `aria-disabled="true"`)
+Every interactive element implements these states in this precedence: Default, Hover (`:hover`), Focus (`:focus-visible`), Active (`:active`), Disabled (`:disabled` or `aria-disabled="true"`).
 
-### 11.2 State Mutators
-- **Hover:**
-  - *Transform:* Background lightness decreases by ~5-10% (Light mode) or increases by ~5-10% (Dark mode). E.g., `blue-500` -> `blue-600` on hover.
-  - *Cursor:* `pointer`.
-  - *Transition:* `transition-colors duration-200 ease-in-out`.
-- **Active (Pressed):**
-  - *Transform:* Scale down slightly (`scale-95`). Background becomes darker (Light mode) or lighter (Dark mode). E.g., `blue-600` -> `blue-700`.
-  - *Transition:* `duration-75 ease-out`.
-- **Focus:**
-  - *Visual Override:* Applies custom focus ring (`outline-2 outline-offset-2 outline-gold-500`).
-  - *Note:* Focus state stacks with Hover/Active visually (e.g., ring persists during click).
-- **Disabled:**
-  - *Visual Override:* Opacity drops to `50%` OR background converts to `black-50` / text to `black-400`.
-  - *Interactivity:* `pointer-events-none`, cursor `not-allowed`.
-  - *Accessibility:* Must use `disabled` attribute for form inputs, or `aria-disabled="true"` for divs/anchors mimicking buttons. No `:hover` or `:active` styles should trigger.
+- **Hover:** one step darker, cursor `pointer`, `transition-colors duration-200 ease-in-out`.
+- **Active:** one more step darker, `scale-[0.98]`, `duration-75 ease-out`.
+- **Focus:** the custom focus ring (Section 3); stacks visually with hover/active.
+- **Disabled:** `pointer-events-none`, `cursor-not-allowed`, no hover/active styling; use the `disabled` attribute on form controls and `aria-disabled` on non-native controls.
 
-### 11.3 Specific Component States
-**Primary Button:**
-- Default: `bg-blue-500 text-black-0`
-- Hover: `bg-blue-600 shadow-md`
-- Active: `bg-blue-700 scale-[0.98]`
-- Disabled: `bg-black-200 text-black-400 opacity-70`
+### Buttons
+Shared: height `40px` (minimum `44px` on mobile), `px-16`, radius `10px`, Body Regular.
 
-**Secondary/Outline Button:**
-- Default: `border-2 border-blue-500 text-blue-500 bg-transparent`
-- Hover: `bg-blue-50`
-- Active: `bg-blue-100 scale-[0.98]`
-- Disabled: `border-black-200 text-black-400`
+**Primary** (one per view): default `bg-blue-700 text-black-0`; hover `bg-blue-800`; active `bg-blue-900`; disabled `bg-black-200 text-black-400`.
 
-**Text Links:**
-- Default: `text-blue-600 underline-offset-4 decoration-transparent`
-- Hover: `text-blue-700 decoration-blue-700 underline`
-- Focus: Adds global focus ring on top.
+**Secondary:** default `bg-black-0 border border-blue-700 text-blue-700`; hover `bg-blue-50`; active `bg-blue-200`; disabled `border-black-200 text-black-400`. Never place a second solid accent color next to a primary.
+
+**Text link:** default `text-blue-700 underline decoration-transparent underline-offset-4`; hover `text-blue-800 underline`. Links inside body copy are always underlined.
+
+**Icon button:** 24px icon in a 44px hit area on mobile (32px on desktop); `aria-label` required.
 
 ---
 
-## 12. Tooltip & Popover Anatomy
+## 12. Tooltips & Popovers
 
-### 12.1 Rendering Infrastructure (Portals)
-- **React Portals:** All Tooltips, Popovers, and Dropdowns MUST be rendered via React Portals (e.g., `createPortal`) to the end of the `document.body`. This prevents z-index clipping and overflow hidden issues caused by parent container constraints.
-- **Positioning Engine:** Use a robust positioning engine (e.g., `@floating-ui/react` or equivalent) to dynamically calculate `top` and `left` coordinates relative to the viewport.
-
-### 12.2 Tooltips (Micro-Information)
-- **Usage:** Strictly for transient, non-interactive helper text (e.g., explaining an icon). Do NOT put links or buttons inside Tooltips.
-- **Trigger:** Triggers on `mouseenter` and `focus`. Must hide on `mouseleave` and `blur`.
-- **Delay:** `300ms` wait before appearing. `0ms` hide delay to prevent UI stickiness.
-- **Anatomy:**
-  - Background: `black-900` (Always dark, regardless of light/dark mode).
-  - Text: `black-0`, Subtext Regular 12px.
-  - Padding: `6px 12px`.
-  - Border Radius: `6px`.
-  - Max Width: `200px`. Text wraps if longer.
-- **Motion:** `opacity-0 scale-95` to `opacity-100 scale-100` over `150ms ease-out`.
-- **Accessibility:** Trigger must have `aria-describedby` pointing to the Tooltip's ID. Tooltip must have `role="tooltip"`.
-
-### 12.3 Popovers (Interactive Information)
-- **Usage:** For complex, interactive content (filters, mini-profiles, quick settings) tied to a specific anchor.
-- **Trigger:** Triggers strictly on `click`. Closes on `Escape` key or click outside.
-- **Anatomy:**
-  - Background: `black-0` (Light) / `black-900` (Dark).
-  - Border: `1px solid black-200` (Light) / `1px solid black-800` (Dark).
-  - Elevation: `shadow-heavy` (Crucial to distinguish from base layer).
-  - Border Radius: `12px`.
-  - Padding: Typically `16px`.
-- **Safe Areas & Collision:**
-  - Implement `flip` logic: If Popover clips the bottom of the viewport, it MUST flip to the top of the anchor.
-  - Implement `shift` logic: Prevent horizontal clipping by shifting along the cross-axis.
-  - Margin from viewport edge: Minimum `16px`.
-- **Focus Trap:** When opened, focus MUST move into the Popover (or its first focusable element). When closed, focus MUST return to the trigger button.
-- **Accessibility:** Trigger must have `aria-haspopup="dialog"` and `aria-expanded="true/false"`. Popover must have `role="dialog"`.
+- **Portals:** all tooltips, popovers and dropdowns render via `createPortal` into `document.body`, positioned by a floating engine (e.g. `@floating-ui/react`) with `flip` and `shift` and a `16px` viewport margin.
+- **Tooltip:** transient, non-interactive helper text only (no links or buttons). Shows on `mouseenter` and `focus` after `300ms`, hides immediately on `mouseleave`/`blur`. `black-900` background, `black-0` Subtext, `px-3 py-1.5`, `6px` radius, max width `200px`, `role="tooltip"` and `aria-describedby` on the trigger. Fade/scale `95%` to `100%` over `150ms`. Tooltips have no touch behavior; anything essential must be visible without hover.
+- **Popover:** interactive content tied to an anchor; opens on click, closes on Escape or outside click. `black-0` background, `1px black-200` border, `shadow-strong`, `12px` radius, `p-4`. Moves focus in on open and back to the trigger on close. Trigger has `aria-haspopup="dialog"` and `aria-expanded`; popover is `role="dialog"`. On mobile a popover becomes a bottom sheet.
 
 ---
 
-## 13. Image & Asset Optimization Rules
+## 13. Images, Icons & Assets
 
-To guarantee visual fidelity and eliminate Cumulative Layout Shift (CLS) from media loads, all imagery and structural assets must adhere to these rigid rules:
+### Aspect ratios (prevent CLS)
+Declare `aspect-ratio` on every image/container: avatars `1/1` with `border-radius: 50%` (max 128px), banners `16/9` or `21/9`, thumbnails `4/3` or `3/2`.
 
-### Aspect Ratio Enforcement
-Images and containers MUST declare a rigid `aspect-ratio` to reserve layout space prior to asset load.
-- **Professor Portraits/Avatars:** `aspect-ratio: 1/1; border-radius: 50%;`. Max dimensions `128x128px`.
-- **Course / Major Banner Images:** `aspect-ratio: 16/9;` or `21/9` for widescreen heroic headers.
-- **Campus Photography / Thumbnails:** `aspect-ratio: 4/3;` or `3/2;`.
+### Fit & rendering
+- `object-fit: cover; object-position: center` unless showing an uncropped chart (`contain`). Background images use `cover`/`center`.
+- Above-the-fold media: `fetchpriority="high"`, no lazy loading. Below the fold: `loading="lazy" decoding="async"`. Serve WebP/AVIF in `<picture>` with a jpeg/png fallback.
 
-### Fit & Rendering Rules
-- Every structural image (`<img>`, `<video>`) MUST use `object-fit: cover; object-position: center;` unless explicitly showcasing an uncropped data visualization (`object-fit: contain;`).
-- Background images must use `background-size: cover; background-position: center;`.
-- SVGs must include `viewBox` and default to `fill: currentColor;` for seamless theme integration. Do NOT hardcode colors in SVG tags.
-
-### Loading & Decoding Policies
-- **Above-the-Fold Media:** Add `fetchpriority="high"` and DO NOT apply lazy loading.
-- **Below-the-Fold Media:** MUST include `loading="lazy"` and `decoding="async"` to prevent main-thread blocking during DOM parsing.
-- **Format:** Modern formats required. Serve `WebP` or `AVIF` formats first using the `<picture>` tag with `jpeg`/`png` fallbacks.
+### Icons
+- **Lucide is the only icon library** (`lucide.dev`). Do not mix in Material Symbols, Font Awesome, Heroicons or hand-drawn icons; if Lucide lacks an icon, ask.
+- Sizes: `12px` (inline dismiss), `16px` (chevrons/inline), `20px` (controls, inputs), `24px` (actions, nav). Keep the Lucide default stroke width (2).
+- Icons use `currentColor` and a `viewBox`; decorative icons are `aria-hidden="true"`; icon-only buttons carry an `aria-label`.
+- Illustrations (Cory) are SVG; don't hard-code colors in SVGs that should follow text color.
 
 ---
 
-## 14. CSS Performance Rules
+## 14. CSS Performance
 
-To ensure sustained 60fps scrolling and near-zero interaction latency (INP), the following advanced CSS performance APIs must be enforced.
+- **Containment:** `contain: content` on deeply nested list items (infinite results).
+- **Content visibility:** `content-visibility: auto` on heavy below-the-fold blocks (review lists, charts), always with `contain-intrinsic-size` (e.g. `0 400px`).
+- **will-change:** only `opacity` and `transform`, only on actively animating elements, removed after the animation. Never on layout properties.
+- Prefer `transform: translate3d()` for compositing on complex DOM.
 
-### Layout Shift & Scroll Management
-- **Scrollbar Gutter:** To prevent horizontal layout jumping when dynamic content triggers vertical scrollbars, the app root must apply `@supports (scrollbar-gutter: stable) { html { scrollbar-gutter: stable; } }`.
-- **Containment:** For deeply nested lists (e.g., infinite course results), apply `contain: content;` to isolate layout recalculations. 
+---
 
-### Render Prioritization
-- **Content Visibility:** For heavy below-the-fold components (e.g., long lists of student reviews, or complex D3 grade charts), apply `content-visibility: auto;`.
-- **Intrinsic Size:** When using `content-visibility: auto;`, you MUST provide a fallback `contain-intrinsic-size` (e.g., `contain-intrinsic-size: 0 400px;`) to prevent scrollbar thrashing and maintain consistent document height before rendering.
+## 15. Course Page Pattern
 
-### Hardware Acceleration Protocol
-- **Will-Change Strictness:** Use `will-change` strictly and ONLY for `opacity` and `transform` properties on elements that are actively animating (e.g., `will-change: transform;`).
-- Do NOT use `will-change` globally or on layout properties like `width`, `top`, or `margin`, as it consumes excessive GPU memory. Remove `will-change` dynamically once the animation concludes, or relegate it exclusively to hover/focus pseudo-classes.
-- **Transform Compositing:** Prefer `transform: translate3d(x, y, z)` over `translate(x, y)` to force hardware acceleration on complex DOM structures.
+A reference composition; build it from the tokens above, not from raw pixel values.
+
+- **Frame:** prebuilt Header, then a `blue-50` body with a single 1080px content column (desktop), then the prebuilt Footer. Sections are separated using the spacing scale.
+- **Hero:** "Back to Courses" link (Lucide `arrow-left`, Body in `blue-800`); rating badge (64px) beside the course code (Subheading 1, Bold) and title (Subheading 2, `black-600`); description in Body (`black-600`); then actions: "Review Course" (primary) and "Compare Course" (secondary), `gap-4`.
+- **Meta row:** GE chips, quarter chip, and units text separated by 3px dot dividers; below it a Live Enrollment row with OPEN and WAITLIST counts (count in SemiBold, label in Subtext; a zero count is `red-500`).
+- **Search bar:** full column width, `50px` tall, `black-0`, `1px black-200` border, `8px` radius.
+- **Data cards (Grade Distributions, GPA Trends, Professor Reviews):** `black-0`, `1px black-200` border, `8px` radius, `p-4`, `gap-3`. Header row: title (Subheading 2) with a "View More…" link and chevron on the right, then a divider. A legend chip (`surface-1` with a series dot, name, and average value plus unit) precedes the chart. Charts follow Section 7.
+- **Professor reviews:** header (rating badge, name in SemiBold, department in Subtext `black-600`, add/bookmark/expand icon buttons); aggregated trait chips; each student review is a `p-3` block with an "Anonymous Student" plus term meta line, uppercase Subtext stat labels (QUALITY, DIFFICULTY, GRADE) each followed by its value, review body in Body (clamped to 3 lines) and an underlined "Read more…" link; a "View More" control loads additional reviews.
+- **Sidebar (368px):** collapsible sections: quarter professor list (48px rating badges, name, trait chips, add and bookmark buttons, "previous quarters" control), Professor Timeline, Prerequisites (collapsed by default).
+- **Mobile:** one column. Hero actions become full-width stacked buttons. Cards stack at full width; the sidebar sections follow the cards as accordions; charts scroll horizontally if needed; review text uses the mobile Body size with 44px "Read more" and "View More" hit areas.
+
+---
+
+## 16. Logo & Voice
+
+- **Logo:** use the supplied lockup only. Minimum width 32px (mark) and 128px (full lockup); keep clear space of `1/4` the mark width. Approved backgrounds: `black-0`, `blue-800`, `gold-300`, `blue-300`. Never stretch, recolor or add effects. Mascot: "Cory" the cow in an astronaut helmet.
+- **Voice:** empathetic and student-first (acknowledge registration stress), data-driven yet grounded (insight, not math homework), clever and witty but never goofy. Plain, direct copy: "Real grade distributions, decoded in seconds." not "Utilizing historical university databases to compile algorithmic GPA charts." Cow puns are occasional and subtle ("No bull, just data."), never forced into every label.
