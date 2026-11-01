@@ -27,7 +27,7 @@ Cattlelog's palette is brand blue and gold over accessible neutral blacks.
 
 ### Surface & Accent Palette
 Pastel surfaces for chips, legend items and tags; each `surface-N` pairs with the same-numbered `accent-N` for text/icons/marks on top of it.
-`surface-1` `#F3EEFF` / `accent-1` `#7C3AED`; `surface-2` `#EFF8F8` / `accent-2` `#6AC2A9`; `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`; `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`; `surface-5` `#FFE5D5` / `accent-5` `#C2410C`; `surface-6` `#ECFEFF` / `accent-6` `#0E7490`; `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`; `surface-8` `#F1F5F9` / `accent-8` `#0F172A`; `surface-9` `#F0FDF4` / `accent-9` `#15803D`; `surface-10` `#FFF7ED` / `accent-10` `#C2410C`.
+`surface-1` `#F3EEFF` / `accent-1` `#7C3AED`; `surface-2` `#EFF8F8` / `accent-2` `#2D7E67`; `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`; `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`; `surface-5` `#FFE5D5` / `accent-5` `#C2410C`; `surface-6` `#ECFEFF` / `accent-6` `#0E7490`; `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`; `surface-8` `#F1F5F9` / `accent-8` `#0F172A`; `surface-9` `#F0FDF4` / `accent-9` `#15803D`; `surface-10` `#FFF7ED` / `accent-10` `#C2410C`.
 
 ### General Education (GE) Colors
 One color per UC Davis GE3 tag (Figma variables `Miscellaneous/Gen. Ed./*`). Use these for every GE chip dot, badge and filter. Tags split into **Topical Breadth** (3 tags) and **Core Literacies** (8 tags):

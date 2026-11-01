@@ -52,7 +52,7 @@ colors:
   surface-9: "#F0FDF4"
   surface-10: "#FFF7ED"
   accent-1: "#7C3AED"
-  accent-2: "#6AC2A9"
+  accent-2: "#2D7E67"
   accent-3: "#B91C1C"
   accent-4: "#1D4ED8"
   accent-5: "#C2410C"
