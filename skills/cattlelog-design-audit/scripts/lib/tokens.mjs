@@ -10,7 +10,7 @@ export const COLOR_GROUPS = ['primitives', 'surfaces', 'accents', 'generalEducat
 
 // Fallbacks used only if tokens.json has no `motion` block.
 export const DEFAULT_MOTION = {
-  duration: { press: 75, tooltip: 100, fast: 150, base: 200, enter: 300, ambient: 1500 },
+  duration: { press: 75, fast: 150, base: 200, enter: 300, ambient: 1500 },
 };
 
 /** Normalize #RGB / #RGBA / #RRGGBB / #RRGGBBAA to upper-case #RRGGBB (alpha dropped). */

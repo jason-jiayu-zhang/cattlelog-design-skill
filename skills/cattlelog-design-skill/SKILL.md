@@ -40,7 +40,7 @@ Figma sometimes contains raw, unbound values (a hex with no variable, an odd rad
 - Only values bound to Figma variables, or already listed in the token files, count as verified. Label anything else "unverified".
 
 #### 7. Motion: tokens, transform/opacity only, reduced-motion
-- Durations are 75 / 100 / 150 / 200 / 300ms (1500ms for skeleton pulses only); easing is `ease-out` (enter), `ease-in` (exit) or `ease-in-out` (color/hover). No arbitrary `duration-[...]` or custom `cubic-bezier`.
+- Durations are 75 / 150 / 200 / 300ms (1500ms for skeleton pulses only); easing is `ease-out` (enter), `ease-in` (exit) or `ease-in-out` (color/hover). No arbitrary `duration-[...]` or custom `cubic-bezier`.
 - Animate `transform` and `opacity` only. Never `transition-all`; name the property (`transition-colors`, `transition-shadow`, ...).
 - Every animation must explain a change. No decorative loops (`animate-bounce`, `animate-ping`, page-load spinners); only skeletons and the Cory mascot loop.
 - The global `prefers-reduced-motion` block is required, and movement degrades to instant or opacity-only.

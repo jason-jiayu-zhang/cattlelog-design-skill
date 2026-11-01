@@ -165,7 +165,7 @@ function auditFile(file, text) {
       add(file, L, 'warn', 'motion/transition-all', '`transition: all` animates every property, including layout.',
         'Name the properties: `transition-colors`, `transition-shadow`, `transition-opacity`, `transition-transform`.');
     for (const m of ln.matchAll(/(?<![\w-])duration-\[[^\]]+\]/g))
-      add(file, L, 'error', 'motion/arbitrary-duration', `Arbitrary duration \`${m[0]}\`.`, `Use a motion token: ${allowedMs}ms (duration-75/100/150/200/300).`);
+      add(file, L, 'error', 'motion/arbitrary-duration', `Arbitrary duration \`${m[0]}\`.`, `Use a motion token: ${allowedMs}ms (duration-75/150/200/300).`);
     for (const m of ln.matchAll(/(?<![\w-])duration-(\d+)\b/g))
       if (!durations.has(Number(m[1])))
         add(file, L, 'warn', 'motion/off-scale-duration', `\`${m[0]}\` is not a motion token.`, `Use one of ${allowedMs}ms. UI feedback should be 75-300ms.`);

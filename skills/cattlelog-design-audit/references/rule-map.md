@@ -29,7 +29,7 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 | `a11y/low-contrast-text` | warn / review | Rule 1, DESIGN §1 | `text-<token>` with no background on the line that is under 4.5:1 on white (warn under 3:1, review 3-4.5:1) |
 | `motion/transition-all` | warn | Rule 7, DESIGN §4.3 | `transition-all` / `transition: all` |
 | `motion/arbitrary-duration` | error | Rule 7 | `duration-[420ms]` |
-| `motion/off-scale-duration` | warn | Rule 7, DESIGN §4.2 | Tailwind `duration-N`, CSS `transition`/`animation` times, or Framer `duration:` not in the `motion.duration` tokens (75/100/150/200/300/1500ms) |
+| `motion/off-scale-duration` | warn | Rule 7, DESIGN §4.2 | Tailwind `duration-N`, CSS `transition`/`animation` times, or Framer `duration:` not in the `motion.duration` tokens (75/150/200/300/1500ms) |
 | `motion/custom-easing` | warn | Rule 7 | `ease-[...]`, `cubic-bezier()` |
 | `motion/decorative-loop` | warn | Rule 7, DESIGN §4.1 | `animate-bounce`, `animate-ping`, `animate-spin` |
 | `motion/layout-property` | warn | Rule 7, DESIGN §14 | Transition on width/height/top/left/right/bottom/margin/padding/inset |

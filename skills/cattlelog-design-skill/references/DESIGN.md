@@ -166,15 +166,12 @@ Motion is deliberate and functional. Respect `prefers-reduced-motion`: replace m
 | Token | ms | Use |
 | --- | --- | --- |
 | `press` | 75 | `:active` press feedback (`scale-[0.98]`, `ease-out`) |
-| `tooltip` | 100 | Tooltip micro-interaction (see open question below) |
-| `fast` | 150 | Exits, popover/dropdown/tooltip enter, search-focus delay, skeleton fade-out |
+| `fast` | 150 | Tooltip fade/scale (enter and exit), popover/dropdown enter, other exits, search-focus delay, skeleton fade-out |
 | `base` | 200 | Hover/color/shadow transitions, toast and overlay fades, default |
 | `enter` | 300 | Content fade-in, page/section enters, long enters |
 | `ambient` | 1500 | Skeleton pulse only |
 
-Easings are Tailwind's built-ins: `ease-out` (enter), `ease-in` (exit), `ease-in-out` (color, hover, ambient). No custom `cubic-bezier`, no `linear` except the skeleton pulse. The one spring is the favorite bounce (below).
-
-*Open question for design:* Section 12 sets the tooltip fade/scale at `150ms`, while Micro-interactions below says tooltips are `100ms`. Use `150ms` (`fast`) until this is resolved.
+Easings are Tailwind's built-ins: `ease-out` (enter), `ease-in` (exit), `ease-in-out` (color, hover, ambient). No custom `cubic-bezier`, no `linear` except the skeleton pulse. The one spring is the favorite bounce (below). Tooltips use `150ms` (`fast`) everywhere (Section 12).
 
 ### 4.3 Recipes (copy these, don't invent)
 | Interaction | Classes / values |
@@ -201,7 +198,7 @@ Never write `transition-all`. Name the property: `transition-colors`, `transitio
   - Stagger list skeletons by `75ms` per item.
   - Content fades in (`300ms ease-out`) as the skeleton fades out (`150ms ease-in`).
 - **Long waits (> 1000ms):** show the mascot, "Cory the Cow", centered after a `150ms` delay to avoid flicker.
-- **Micro-interactions:** favoriting uses a spring bounce (`stiffness: 400, damping: 10`); ratings highlight progressively on hover; tooltips are `100ms`, no bounce.
+- **Micro-interactions:** favoriting uses a spring bounce (`stiffness: 400, damping: 10`); ratings highlight progressively on hover; tooltips fade/scale over `150ms`, no bounce.
 
 ### 4.5 Reduced motion (required)
 Add this once in the global stylesheet. It turns movement into instant changes and stops the skeleton pulse (the skeleton stays a static `black-50` block):
@@ -232,7 +229,7 @@ For JS-driven motion, read `useReducedMotion()` (Framer Motion) and drop the `sc
 
 ### 4.7 Motion checklist
 - [ ] Does the animation explain a change? If not, delete it.
-- [ ] Duration is a token (75/100/150/200/300), easing is `out`/`in`/`in-out`.
+- [ ] Duration is a token (75/150/200/300), easing is `out`/`in`/`in-out`.
 - [ ] Only `transform` and `opacity` animate; no `transition-all`.
 - [ ] Enters ease-out and exits ease-in (and exits are shorter).
 - [ ] Global reduced-motion block exists and the component degrades to instant/opacity-only.

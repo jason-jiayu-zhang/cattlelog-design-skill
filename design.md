@@ -188,7 +188,6 @@ shadows:
   strong: "0px 4px 12px 0px #00000026, 0px 4px 4px -4px #00000026"
 motion:
   duration-press: 75ms
-  duration-tooltip: 100ms
   duration-fast: 150ms
   duration-base: 200ms
   duration-enter: 300ms
@@ -333,7 +332,7 @@ Three two-layer shadows (above): `subtle` for resting cards, `fair` for hover, `
 
 Premium and functional, never decorative; honor `prefers-reduced-motion`. Hover `200ms`, active `75ms`, overlay fades `150-300ms`. Skeletons (not spinners) pulse `black-50` to `black-200` on `1.5s`, staggered `75ms`.
 
-Durations are the `motion` tokens above (75/100/150/200/300ms, plus 1500ms for skeletons); easings are `ease-out` for enters, `ease-in` for exits, `ease-in-out` for color and hover. Animate only `transform` and `opacity`, never `transition-all`, and never add a new infinite animation. Motion tokens are consolidated from documented values, not Figma variables. Recipes and anti-patterns: `references/DESIGN.md` Section 4.
+Durations are the `motion` tokens above (75/150/200/300ms, plus 1500ms for skeletons); easings are `ease-out` for enters, `ease-in` for exits, `ease-in-out` for color and hover. Animate only `transform` and `opacity`, never `transition-all`, and never add a new infinite animation. Motion tokens are consolidated from documented values, not Figma variables. Recipes and anti-patterns: `references/DESIGN.md` Section 4.
 
 ## Shapes
 

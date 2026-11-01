@@ -57,7 +57,7 @@ const CATS = [
   {
     id: 'motion', title: 'Prototype motion off the motion tokens',
     rules: ['motion/off-scale-duration', 'motion/arbitrary-duration', 'motion/custom-easing', 'motion/decorative-loop'],
-    task: 'Check prototype interactions and animations. Durations must be 75, 100, 150, 200 or 300ms (skeleton pulses 1500ms). Easing: ease-out for things entering, ease-in for things leaving, ease-in-out for color/hover. Remove bounce/spring easings except on the favorite action, and any looping decorative animation. Report anything you cannot map to a token.',
+    task: 'Check prototype interactions and animations. Durations must be 75, 150, 200 or 300ms (skeleton pulses 1500ms). Easing: ease-out for things entering, ease-in for things leaving, ease-in-out for color/hover. Remove bounce/spring easings except on the favorite action, and any looping decorative animation. Report anything you cannot map to a token.',
   },
   {
     id: 'theme', title: 'Dark-mode variants',
