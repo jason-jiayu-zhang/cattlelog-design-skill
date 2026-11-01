@@ -40,11 +40,13 @@ if (args.includes('--documented')) {
     ['blue-700', 'black-0', 'secondary button / links'],
     ['blue-800', 'black-0', 'link hover'],
     ['black-400', 'black-200', 'disabled button (exempt: disabled)'],
-    ['black-0', 'red-500', 'text on red-500'],
+    ['red-500', 'black-0', 'red indicator/icon on white (UI 3:1, never text)'],
+    ['green-500', 'black-0', 'green indicator/icon on white (UI 3:1, never text)'],
+    ['black-0', 'red-500', 'rating badge score on red (large text only)'],
     ['black-1000', 'yellow-500', 'text on yellow-500'],
     ['black-1000', 'orange-500', 'text on orange-500'],
     ['black-1000', 'lime-500', 'text on lime-500'],
-    ['black-0', 'green-500', 'text on green-500'],
+    ['black-0', 'green-500', 'rating badge score on green (large text only)'],
     ['black-0', 'black-900', 'tooltip'],
   ];
   for (let n = 1; n <= 10; n++)

@@ -51,7 +51,8 @@ GE filters mirror this grouping: a Topical Breadth section and a Core Literacies
 ### Color Usage & Contrast
 - Surfaces: page `blue-50`, cards `black-0`, borders `black-200`, primary text `black-1000`, secondary text `black-600` or darker, brand actions `blue-700`, brand chrome `blue-800`.
 - **Contrast is mandatory.** Normal text needs at least 4.5:1 and large text (24px, or 18.66px bold) at least 3:1 against its actual background; UI boundaries and icons need 3:1. Check the pairing, not the token: text lighter than `black-600` (e.g. `black-400`) is never used for readable copy, and blue lighter than `blue-700` is not used for body-size text on white.
-- **Text on colored fills:** use white on dark fills (`blue-700` and darker, `red-500` and darker, `accent-*`) and `black-1000` on light fills (`yellow-500`, `orange-500`, `lime-500`, gold, pastel `surface-*`, `blue-300` and lighter). Verify the pair when unsure.
+- **Text on colored fills:** use white on dark fills (`blue-700` and darker, `accent-*`) and `black-1000` on light fills (`yellow-500`, `orange-500`, `lime-500`, gold, pastel `surface-*`, `blue-300` and lighter). Verify the pair when unsure.
+- **`red-500` and `green-500` are for icons, borders, fills and indicators only, never a text color.** They meet the 3:1 UI threshold on white (`red-500` 3.82:1, `green-500` 4.13:1) but not 4.5:1, so they must not carry body-size text in either direction (as text on white, or white text on them). The only text on these fills is the Rating Badge score (Section 8), which must be large text (24px, or 18.66px bold).
 - Never use color alone to convey meaning: pair status color with an icon or text.
 - **Badges/Tags:** pastel `surface-*` or `-50`/`-200` backgrounds with `-700` or darker text.
 
@@ -310,7 +311,7 @@ When `navigator.onLine` is false show a sticky banner (`bg-yellow-500 text-black
 - **Trait chip:** `black-50` fill, `8px` radius, `px-2 py-1`, Subtext Medium in `black-700`.
 - **Quarter/term chip:** `blue-300` fill, `6px` radius, `black-1000` text.
 - **Status badge:** pill (`9999px`), Subtext; pastel `surface-*` background with `accent-*` text.
-- **Rating badge:** a rounded square (`8-12px` radius) with the score in Bold, filled by score: `green-500` high, `yellow-500` mid, `red-500` low. Text color follows the contrast rule (dark text on yellow). Sizes: 64px (page hero), 48px (list rows), 36px (inline). Always render the number so color is never the only signal.
+- **Rating badge:** a rounded square (`8-12px` radius) with the score in Bold, filled by score: `green-500` high, `yellow-500` mid, `red-500` low. Text color follows the contrast rule (dark text on yellow; white on `red-500`/`green-500` is 3.82:1 / 4.13:1, so the score must be large or bold-large text, see Section 1). Sizes: 64px (page hero), 48px (list rows), 36px (inline). Always render the number so color is never the only signal.
 
 ---
 
