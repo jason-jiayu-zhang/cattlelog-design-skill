@@ -27,7 +27,7 @@ Cattlelog's palette is brand blue and gold over accessible neutral blacks.
 
 ### Surface & Accent Palette
 Pastel surfaces for chips, legend items and tags; each `surface-N` pairs with the same-numbered `accent-N` for text/icons/marks on top of it.
-`surface-1` `#F3EEFF` / `accent-1` `#7C3AED`; `surface-2` `#EFF8F8` / `accent-2` `#6AC2A9`; `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`; `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`; `surface-5` `#FFE5D5` / `accent-5` `#C2410C`; `surface-6` `#ECFEFF` / `accent-6` `#0E7490`; `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`; `surface-8` `#F1F5F9` / `accent-8` `#0F172A`; `surface-9` `#F0FDF4` / `accent-9` `#15803D`; `surface-10` `#FFF7ED` / `accent-10` `#C2410C`.
+`surface-1` `#F3EEFF` / `accent-1` `#7C3AED`; `surface-2` `#EFF8F8` / `accent-2` `#2D7E67`; `surface-3` `#FEF2F2` / `accent-3` `#B91C1C`; `surface-4` `#EFF6FF` / `accent-4` `#1D4ED8`; `surface-5` `#FFE5D5` / `accent-5` `#C2410C`; `surface-6` `#ECFEFF` / `accent-6` `#0E7490`; `surface-7` `#FDF4FF` / `accent-7` `#A21CAF`; `surface-8` `#F1F5F9` / `accent-8` `#0F172A`; `surface-9` `#F0FDF4` / `accent-9` `#15803D`; `surface-10` `#FFF7ED` / `accent-10` `#C2410C`.
 
 ### General Education (GE) Colors
 One color per UC Davis GE3 tag (Figma variables `Miscellaneous/Gen. Ed./*`). Use these for every GE chip dot, badge and filter. Tags split into **Topical Breadth** (3 tags) and **Core Literacies** (8 tags):
@@ -151,6 +151,45 @@ Never set readable copy smaller than Subtext.
 
 Motion is deliberate and functional. Respect `prefers-reduced-motion`: replace movement with instant or opacity-only changes.
 
+> **Status:** the motion tokens and recipes below consolidate values already documented in this file. They are *not* Figma variables, so treat them as unverified until design confirms (same caveat as the GE names). Machine-readable copy: `resources/tokens.json` -> `motion`.
+
+### 4.1 Principles (read these before animating anything)
+1. **Motion must explain a change.** Animate to show that something appeared, moved, or was confirmed. If removing the animation loses no information, remove it.
+2. **Fast.** UI feedback is 75-300ms. Anything over 300ms feels slow; only skeleton pulses (1500ms) and the mascot run longer.
+3. **Enter slower than exit.** Things arriving ease **out** (fast start, soft landing, 200-300ms). Things leaving ease **in** and are quicker (150ms). Color and hover changes ease **in-out**.
+4. **Animate `transform` and `opacity` only.** They run on the GPU. `width`, `height`, `top`, `left`, `margin`, `padding` force layout every frame and cause jank and layout shift (Section 14). The one sanctioned exception is a disclosure/accordion panel, which may animate `grid-template-rows: 0fr` to `1fr`.
+5. **One loud thing at a time.** Don't animate several unrelated elements at once. Lists stagger by `75ms` per item, and only the first 5 items (later ones appear with the group).
+6. **No decorative loops.** The only infinite animations are skeleton pulses and the Cory mascot. No `animate-bounce`, `animate-ping` or spinners for page loads.
+7. **Never rely on motion alone** to convey state; pair it with text, an icon or color.
+
+### 4.2 Motion tokens
+| Token | ms | Use |
+| --- | --- | --- |
+| `press` | 75 | `:active` press feedback (`scale-[0.98]`, `ease-out`) |
+| `fast` | 150 | Tooltip fade/scale (enter and exit), popover/dropdown enter, other exits, search-focus delay, skeleton fade-out |
+| `base` | 200 | Hover/color/shadow transitions, toast and overlay fades, default |
+| `enter` | 300 | Content fade-in, page/section enters, long enters |
+| `ambient` | 1500 | Skeleton pulse only |
+
+Easings are Tailwind's built-ins: `ease-out` (enter), `ease-in` (exit), `ease-in-out` (color, hover, ambient). No custom `cubic-bezier`, no `linear` except the skeleton pulse. The one spring is the favorite bounce (below). Tooltips use `150ms` (`fast`) everywhere (Section 12).
+
+### 4.3 Recipes (copy these, don't invent)
+| Interaction | Classes / values |
+| --- | --- |
+| Hover color change | `transition-colors duration-200 ease-in-out` |
+| Hover card lift | `transition-shadow duration-200 ease-in-out` (`shadow-subtle` to `shadow-fair`) |
+| Press | `active:scale-[0.98] duration-75 ease-out` |
+| Modal | backdrop opacity `0` to `1`; dialog opacity `0` to `1` with `scale(0.98)` to `1`; `200ms ease-out` in, `150ms ease-in` out |
+| Popover / dropdown | opacity `0` to `1` with `scale(0.95)` to `1`, origin at the anchor, `150ms ease-out` in, `150ms ease-in` out |
+| Toast | slide from the top-right edge with opacity `0` to `1`, `200ms ease-out`; reverse on exit (Section 8) |
+| Content replacing skeleton | skeleton out `150ms ease-in`, content in `300ms ease-out` |
+| List stagger | `75ms` delay per item, first 5 items only |
+| Disclosure panel | `grid-template-rows: 0fr` to `1fr`, `200ms ease-out`, content `overflow-hidden` |
+
+Never write `transition-all`. Name the property: `transition-colors`, `transition-shadow`, `transition-opacity`, `transition-transform`.
+
+### 4.4 Specific behaviors
+
 - **Page transitions:** cross-fade with `scale(0.98)` to `scale(1)` (View Transitions API, Framer Motion fallback).
 - **Search focus:** the search bar expands or dims the background with `backdrop-blur-md`, with a `150ms` delay into the active state.
 - **Skeletons (no spinners for page loads):**
@@ -159,7 +198,42 @@ Motion is deliberate and functional. Respect `prefers-reduced-motion`: replace m
   - Stagger list skeletons by `75ms` per item.
   - Content fades in (`300ms ease-out`) as the skeleton fades out (`150ms ease-in`).
 - **Long waits (> 1000ms):** show the mascot, "Cory the Cow", centered after a `150ms` delay to avoid flicker.
-- **Micro-interactions:** favoriting uses a spring bounce (`stiffness: 400, damping: 10`); ratings highlight progressively on hover; tooltips are `100ms`, no bounce.
+- **Micro-interactions:** favoriting uses a spring bounce (`stiffness: 400, damping: 10`); ratings highlight progressively on hover; tooltips fade/scale over `150ms`, no bounce.
+
+### 4.5 Reduced motion (required)
+Add this once in the global stylesheet. It turns movement into instant changes and stops the skeleton pulse (the skeleton stays a static `black-50` block):
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+For JS-driven motion, read `useReducedMotion()` (Framer Motion) and drop the `scale`/`translate` parts, keeping an opacity fade at most. In Tailwind, add `motion-reduce:transition-none` to elements whose movement matters.
+
+### 4.6 Motion anti-patterns
+| Don't | Why | Do |
+| --- | --- | --- |
+| `transition-all` | Animates layout and paint properties, janks | Name the property |
+| `duration-500`+, `duration-[Nms]` | Slow UI feels broken; arbitrary values drift | Use a motion token |
+| Animating `width`/`height`/`top`/`left`/`margin` | Reflow every frame, layout shift | `transform` / `opacity` (or `grid-template-rows` for disclosures) |
+| `animate-bounce`, `animate-ping`, page-load spinners | Decorative loops, distracting | Skeletons, then the Cory mascot after 1000ms |
+| Springs everywhere | Reads as playful noise | Spring only on favoriting |
+| Custom `cubic-bezier` | Inconsistent feel | `ease-out` / `ease-in` / `ease-in-out` |
+| Parallax, scroll-jacking, autoplay | Accessibility and performance cost | Not used in Cattlelog |
+| Motion with no reduced-motion path | Excludes users with vestibular disorders | Section 4.5 |
+
+### 4.7 Motion checklist
+- [ ] Does the animation explain a change? If not, delete it.
+- [ ] Duration is a token (75/150/200/300), easing is `out`/`in`/`in-out`.
+- [ ] Only `transform` and `opacity` animate; no `transition-all`.
+- [ ] Enters ease-out and exits ease-in (and exits are shorter).
+- [ ] Global reduced-motion block exists and the component degrades to instant/opacity-only.
+- [ ] No new infinite animation.
 
 ---
 

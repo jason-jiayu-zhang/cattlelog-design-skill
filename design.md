@@ -52,7 +52,7 @@ colors:
   surface-9: "#F0FDF4"
   surface-10: "#FFF7ED"
   accent-1: "#7C3AED"
-  accent-2: "#6AC2A9"
+  accent-2: "#2D7E67"
   accent-3: "#B91C1C"
   accent-4: "#1D4ED8"
   accent-5: "#C2410C"
@@ -186,6 +186,15 @@ shadows:
   subtle: "0px 1px 3px 0px #0000001A, 0px 1px 1px -1px #0000001A"
   fair: "0px 2px 6px 0px #00000026, 0px 2px 2px -2px #00000026"
   strong: "0px 4px 12px 0px #00000026, 0px 4px 4px -4px #00000026"
+motion:
+  duration-press: 75ms
+  duration-fast: 150ms
+  duration-base: 200ms
+  duration-enter: 300ms
+  duration-ambient: 1500ms
+  easing-out: "cubic-bezier(0, 0, 0.2, 1)"
+  easing-in: "cubic-bezier(0.4, 0, 1, 1)"
+  easing-in-out: "cubic-bezier(0.4, 0, 0.2, 1)"
 components:
   button-primary:
     backgroundColor: "{colors.blue-700}"
@@ -322,6 +331,8 @@ Three two-layer shadows (above): `subtle` for resting cards, `fair` for hover, `
 ## Motion
 
 Premium and functional, never decorative; honor `prefers-reduced-motion`. Hover `200ms`, active `75ms`, overlay fades `150-300ms`. Skeletons (not spinners) pulse `black-50` to `black-200` on `1.5s`, staggered `75ms`.
+
+Durations are the `motion` tokens above (75/150/200/300ms, plus 1500ms for skeletons); easings are `ease-out` for enters, `ease-in` for exits, `ease-in-out` for color and hover. Animate only `transform` and `opacity`, never `transition-all`, and never add a new infinite animation. Motion tokens are consolidated from documented values, not Figma variables. Recipes and anti-patterns: `references/DESIGN.md` Section 4.
 
 ## Shapes
 

@@ -4,6 +4,8 @@
   "description": "Davis Cattlelog brand identity and design system",
   "skills": [
     "skills/cattlelog-design-skill/SKILL.md",
-    "skills/cattlelog-design-audit/SKILL.md"
+    "skills/cattlelog-design-audit/SKILL.md",
+    "skills/cattlelog-design-audit-fix/SKILL.md",
+    "skills/cattlelog-token-sync/SKILL.md"
   ]
 }

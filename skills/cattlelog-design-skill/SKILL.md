@@ -39,6 +39,19 @@ Figma sometimes contains raw, unbound values (a hex with no variable, an odd rad
 - Use an existing token only if the difference is imperceptible (same hue, within about one scale step); otherwise stop, name the node and the value, and ask whether to bind a new token in Figma or use an existing one.
 - Only values bound to Figma variables, or already listed in the token files, count as verified. Label anything else "unverified".
 
+#### 7. Motion: tokens, transform/opacity only, reduced-motion
+- Durations are 75 / 150 / 200 / 300ms (1500ms for skeleton pulses only); easing is `ease-out` (enter), `ease-in` (exit) or `ease-in-out` (color/hover). No arbitrary `duration-[...]` or custom `cubic-bezier`.
+- Animate `transform` and `opacity` only. Never `transition-all`; name the property (`transition-colors`, `transition-shadow`, ...).
+- Every animation must explain a change. No decorative loops (`animate-bounce`, `animate-ping`, page-load spinners); only skeletons and the Cory mascot loop.
+- The global `prefers-reduced-motion` block is required, and movement degrades to instant or opacity-only.
+- Copy a recipe from DESIGN.md Section 4.3 instead of inventing timing. *Motion tokens are consolidated from documented values, not Figma variables.*
+
+---
+
+## Building a New Component
+
+When asked to create a component, follow `references/COMPONENT-SCAFFOLD.md`: read the matching DESIGN.md section, start from a template in `resources/templates/` (`Button.tsx`, `Modal.tsx`, `Popover.tsx`), implement all states, then verify with the `cattlelog-design-audit` skill.
+
 ---
 
 ## Token Lookup
@@ -54,7 +67,8 @@ For detailed patterns, read the relevant section in `references/DESIGN.md` BEFOR
 | Colors, Contrast, GE tags & Shadows | `references/DESIGN.md` (Section 1) |
 | Grids, Shell & Responsive/Mobile Layout | `references/DESIGN.md` (Section 2) |
 | Typography, Truncation & Accessibility | `references/DESIGN.md` (Section 3) |
-| Motion, Skeletons & Micro-interactions | `references/DESIGN.md` (Section 4) |
+| Motion tokens, recipes, Skeletons, Reduced motion | `references/DESIGN.md` (Section 4) |
+| New component procedure & templates | `references/COMPONENT-SCAFFOLD.md` |
 | Empty States, Errors & Scrollbars | `references/DESIGN.md` (Section 5) |
 | Form Controls Anatomy | `references/DESIGN.md` (Section 6) |
 | Data Visualization Colors | `references/DESIGN.md` (Section 7) |
@@ -86,3 +100,4 @@ Verify EVERY item before delivering UI code:
 - [ ] Skeletons mirror content structure; images declare `aspect-ratio`.
 - [ ] Text truncation applies `break-words` and `line-clamp` explicitly.
 - [ ] Icons are Lucide only; header and footer are the prebuilt components.
+- [ ] Motion uses duration/easing tokens, animates only `transform`/`opacity`, has no `transition-all` and no new loops, and respects `prefers-reduced-motion`.
