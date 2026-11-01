@@ -26,6 +26,7 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 | `a11y/clickable-div` | warn | Rule 5 | `onClick` on div/span/li/td with no `role` |
 | `layout/z-index` | error | DESIGN §9 | z-index not in -10, 0, 10, 100, 200, 300, 400, 500, 600 |
 | `a11y/contrast` | error / warn | Rule 1, DESIGN §1 | `bg-<token>` and `text-<token>` on one line: error below 3:1, warn below 4.5:1 unless the line looks like large text |
+| `color/status-text` | warn | DESIGN §1 | `text-red-500` / `text-green-500`: status colors are for icons, borders and indicators, never text. Heuristic: white text on a red/green fill (the Rating Badge score) is allowed, so dismiss it there. |
 | `a11y/low-contrast-text` | warn / review | Rule 1, DESIGN §1 | `text-<token>` with no background on the line that is under 4.5:1 on white (warn under 3:1, review 3-4.5:1) |
 | `motion/transition-all` | warn | Rule 7, DESIGN §4.3 | `transition-all` / `transition: all` |
 | `motion/arbitrary-duration` | error | Rule 7 | `duration-[420ms]` |
