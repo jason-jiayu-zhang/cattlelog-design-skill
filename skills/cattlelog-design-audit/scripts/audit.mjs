@@ -142,7 +142,7 @@ function auditFile(file, text) {
 
     // ---- color/status-text: red-500 and green-500 are icon/indicator colors, never a text color
     for (const m of ln.matchAll(/(?<![\w:-])text-(red|green)-500(?![\w/-])/g))
-      add(file, L, 'warn', 'color/status-text', `\`${m[0]}\` uses a status color as text (${m[1]}-500 is only 3:1-4.1:1 on white).`,
+      add(file, L, 'warn', 'color/status-text', `\`${m[0]}\` uses a status color as text. ${m[1]}-500 is an icon/indicator color and clears 4.5:1 on white only narrowly.`,
         'Keep red/green for icons, borders and indicators; use black-1000/black-600 for the text and pair with an icon in the status color.');
 
     // ---- a11y/contrast (Tailwind token pairs on one line)

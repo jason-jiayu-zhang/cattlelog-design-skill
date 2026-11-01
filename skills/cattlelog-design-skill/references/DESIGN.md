@@ -19,9 +19,9 @@ Cattlelog's palette is brand blue and gold over accessible neutral blacks.
 `black-0` `#FFFFFF`, `black-50` `#F2F2F2`, `black-200` `#D9D9D9`, `black-300` `#BFBFBF`, `black-400` `#A6A6A6`, `black-500` `#8C8C8C`, `black-600` `#737373`, `black-700` `#595959`, `black-800` `#404040`, `black-900` `#262626`, `black-1000` `#181818` (primary text).
 
 ### Semantic & Status Colors
-- **Success:** `green-500` `#3E8D40` / `lime-500` `#76AF50`
+- **Success:** `green-500` `#38863A` / `lime-500` `#76AF50`
 - **Warning:** `yellow-500` `#E7C756` / `orange-500` `#E0A846`
-- **Error:** `red-500` `#E05346` / `pink-500` `#D97575`
+- **Error:** `red-500` `#CF473A` / `pink-500` `#D97575`
 - **Info:** `blue-500` `#6DAEDF`
 - **Logo pink:** `pink-500` / `pink-250` `#F5A0A2`
 
@@ -52,7 +52,7 @@ GE filters mirror this grouping: a Topical Breadth section and a Core Literacies
 - Surfaces: page `blue-50`, cards `black-0`, borders `black-200`, primary text `black-1000`, secondary text `black-600` or darker, brand actions `blue-700`, brand chrome `blue-800`.
 - **Contrast is mandatory.** Normal text needs at least 4.5:1 and large text (24px, or 18.66px bold) at least 3:1 against its actual background; UI boundaries and icons need 3:1. Check the pairing, not the token: text lighter than `black-600` (e.g. `black-400`) is never used for readable copy, and blue lighter than `blue-700` is not used for body-size text on white.
 - **Text on colored fills:** use white on dark fills (`blue-700` and darker, `accent-*`) and `black-1000` on light fills (`yellow-500`, `orange-500`, `lime-500`, gold, pastel `surface-*`, `blue-300` and lighter). Verify the pair when unsure.
-- **`red-500` and `green-500` are for icons, borders, fills and indicators only, never a text color.** They meet the 3:1 UI threshold on white (`red-500` 3.82:1, `green-500` 4.13:1) but not 4.5:1, so they must not carry body-size text in either direction (as text on white, or white text on them). The only text on these fills is the Rating Badge score (Section 8), which must be large text (24px, or 18.66px bold).
+- **`red-500` and `green-500` are for icons, borders, fills and indicators only, never a text color.** They clear 4.5:1 against white only narrowly (`red-500` 4.55:1, `green-500` 4.53:1), so there is no margin for opacity, tints or anti-aliasing: keep them off body text and use `black-1000`/`black-600` for any words, paired with an icon or dot in the status color. The one text-on-fill case is the Rating Badge score (Section 8), in white.
 - Never use color alone to convey meaning: pair status color with an icon or text.
 - **Badges/Tags:** pastel `surface-*` or `-50`/`-200` backgrounds with `-700` or darker text.
 
@@ -311,7 +311,7 @@ When `navigator.onLine` is false show a sticky banner (`bg-yellow-500 text-black
 - **Trait chip:** `black-50` fill, `8px` radius, `px-2 py-1`, Subtext Medium in `black-700`.
 - **Quarter/term chip:** `blue-300` fill, `6px` radius, `black-1000` text.
 - **Status badge:** pill (`9999px`), Subtext; pastel `surface-*` background with `accent-*` text.
-- **Rating badge:** a rounded square (`8-12px` radius) with the score in Bold, filled by score: `green-500` high, `yellow-500` mid, `red-500` low. Text color follows the contrast rule (dark text on yellow; white on `red-500`/`green-500` is 3.82:1 / 4.13:1, so the score must be large or bold-large text, see Section 1). Sizes: 64px (page hero), 48px (list rows), 36px (inline). Always render the number so color is never the only signal.
+- **Rating badge:** a rounded square (`8-12px` radius) with the score in Bold, filled by score: `green-500` high, `yellow-500` mid, `red-500` low. Text color follows the contrast rule (dark text on yellow; white on `red-500`/`green-500` is 4.55:1 / 4.53:1, which passes AA but with almost no margin, see Section 1). Sizes: 64px (page hero), 48px (list rows), 36px (inline). Always render the number so color is never the only signal.
 
 ---
 
