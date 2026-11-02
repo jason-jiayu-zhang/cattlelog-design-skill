@@ -59,7 +59,7 @@ export function Popover({ trigger, triggerLabel, children }: PopoverProps) {
               style={floatingStyles}
               // z-100 = dropdowns/popovers layer. shadow-strong + 12px radius + p-4 per DESIGN §12.
               // Motion (DESIGN §4.3): 150ms ease-out opacity + scale(0.95 -> 1), origin at the anchor.
-              className="z-[100] rounded-lg border border-black-200 bg-black-0 p-4 shadow-strong"
+              className="z-[100] rounded-lg border-hairline border-black-200 bg-black-0 p-4 shadow-strong"
               {...getFloatingProps()}
             >
               {children}

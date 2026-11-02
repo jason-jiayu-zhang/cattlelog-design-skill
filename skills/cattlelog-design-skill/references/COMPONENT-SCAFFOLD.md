@@ -3,7 +3,7 @@
 Use this when asked to create a new Cattlelog component. Follow the steps in order; the goal is a component that passes `cattlelog-design-audit` on the first run.
 
 ## 1. Find the anatomy first
-Read the matching `DESIGN.md` section **before** writing code. Don't design from memory.
+Read the matching section file **before** writing code (section numbers below map to `references/design/NN-*.md`; the index is `references/DESIGN.md`). Don't design from memory.
 
 | Component type | Read |
 |---|---|
@@ -26,11 +26,12 @@ Copy from `resources/templates/` and adapt imports to the repo's conventions:
 | `Button.tsx` | Primary/secondary variants, all 5 interaction states, token-only colors, press/hover motion, custom focus ring, 44px mobile target |
 | `Modal.tsx` | Native `<dialog>` (free focus trap + restoration), `role`/`aria-modal`/`aria-labelledby`, sizes 360/480/640, backdrop |
 | `Popover.tsx` | Portal, flip/shift with 16px margin, focus manager, `aria-haspopup`/`aria-expanded`, `shadow-strong` |
+| `Skeleton.tsx` | `Skeleton` block (black-200 pulse, 75ms stagger, reduced-motion safe) and `Loadable`, which swaps skeleton and content in the same grid cell (150ms out / 300ms in) |
 
-Templates assume the Tailwind theme maps `design.md` (`colors`, `spacing`, `rounded`, `shadows`). Check the repo's Tailwind config first. If `rounded-button`, `rounded-xl` = 16px, or `shadow-strong` aren't defined, add them from `design.md` rather than using arbitrary values.
+Templates assume the Tailwind theme maps `design.md` (`colors`, `spacing`, `rounded`, `shadows`, and `borderWidth.hairline` = `0.5px`). Check the repo's Tailwind config first. If `rounded-button`, `rounded-xl` = 16px, or `shadow-strong` aren't defined, add them from `design.md` rather than using arbitrary values.
 
 ## 3. Required states and variants
-Every interactive component implements, in order: Default, Hover, Focus (`:focus-visible`), Active, Disabled. Anything that loads data also needs a skeleton that mirrors the final layout, an empty state and an error state (Section 5). Mobile first: single column, 44px touch targets, 16px input text.
+Every interactive component implements, in order: Default, Hover, Focus (`:focus-visible`), Active, Disabled. Anything that loads data is **skeleton-first by default** (Mandatory Rule 8): build the skeleton with `Skeleton.tsx` alongside the real layout, not afterward, plus an empty state and an error state (Section 5). Skip the skeleton only for the exceptions in Rule 8. Mobile first: single column, 44px touch targets, 16px input text.
 
 ## 4. Accessibility minimums
 - Native element first (`button`, `a`, `dialog`, `input`). Add ARIA roles only where no native element exists.

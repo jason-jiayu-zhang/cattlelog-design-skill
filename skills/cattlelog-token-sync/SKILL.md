@@ -10,8 +10,8 @@ Figma is the authority. This skill pulls its variables and makes the repo's toke
 | File | Role | Auto-updated by `--write` |
 |------|------|---------------------------|
 | `cattlelog-design-skill/resources/tokens.json` | machine-readable tokens (read by the audit) | Yes |
-| `design.md` (repo root) frontmatter | compact token sheet (`colors`, `spacing`, `rounded`) | Yes |
-| `cattlelog-design-skill/references/DESIGN.md` prose | `` `blue-500` `#6DAEDF` `` mentions and the GE table | Yes (exact `name` + `hex` pairs only) |
+| `cattlelog-design-skill/design.md` frontmatter (symlinked at the repo root) | compact token sheet (`colors`, `spacing`, `rounded`) | Yes |
+| `cattlelog-design-skill/references/design/*.md` prose | `` `blue-500` `#6DAEDF` `` mentions and the GE table | Yes (exact `name` + `hex` pairs only) |
 | a CSS / Tailwind variables file (`--css=`) | the app's actual variables | **No.** Report only; update by hand |
 
 Scope: colors (all groups), spacing and rounded. Typography, shadows and motion tokens are not Figma-synced by this script (motion isn't a Figma variable at all).

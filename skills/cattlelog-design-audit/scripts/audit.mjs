@@ -165,6 +165,26 @@ function auditFile(file, text) {
       }
     }
 
+
+
+    // ---- border/hairline: container borders are 0.5px (`border-hairline`) and never on colored fills
+    if (/(?<=["'`\s])border(?=["'`\s])/.test(ln) && /(?<![\w:-])border-black-200\b/.test(ln) && /class(Name)?=|["'`]/.test(ln) && !/<(input|textarea|select|Input|Select|Checkbox|Radio)\b|type=["'](checkbox|radio)/.test(ln))
+      add(file, L, 'warn', 'border/hairline', 'Neutral container border is 1px (`border`).', 'Use `border-hairline border-black-200` (0.5px). Inputs, outlined buttons and checkboxes keep their own widths; dismiss there.');
+    if (/(?<![\w:-])bg-(surface-\d+|blue-(?!50\b)\d+|gold-\d+|green-\d+|red-\d+|pink-\d+)\b/.test(ln) && /(?<![\w:-])border(-hairline)?\b/.test(ln) && /(?<![\w:-])border-black-\d+\b/.test(ln))
+      add(file, L, 'review', 'border/colored-fill', 'Neutral border on a colored fill.', 'Colored fills take no neutral border; the fill already separates them (DESIGN §17). Keep only state borders (error, selected, focus).');
+
+    // ---- icon/emoji: emoji are content, never icons
+    if (/<(button|a|Button|Link|Tab|li)\b|role=["'](tab|menuitem|button)["']|aria-label/.test(ln) && /\p{Extended_Pictographic}/u.test(ln))
+      add(file, L, 'warn', 'icon/emoji', 'Emoji used inside a control or label.', 'Use a Lucide icon (aria-hidden) instead; emoji render differently per platform and cannot be recolored.');
+
+    // ---- layout/flex-1-control: controls hug their content
+    if (/<(button|Button|Chip|Badge)\b[^>]*(?<![\w-])flex-1\b/.test(ln))
+      add(file, L, 'review', 'layout/flex-1-control', 'Control stretched with `flex-1`.', 'Controls hug their content. Stretch the wrapper, or use `w-full` only for full-width mobile CTAs.');
+
+    // ---- motion/will-change
+    if (/(?<![\w-])will-change(-\w+)?\b/.test(ln))
+      add(file, L, 'review', 'motion/will-change', '`will-change` promotes a layer permanently.', 'Apply it only to the single element being animated, only while it animates; never on a page or container.');
+
     // ---- motion
     if (/(?<![\w-])transition-all\b|transition\s*:\s*all\b/.test(ln))
       add(file, L, 'warn', 'motion/transition-all', '`transition: all` animates every property, including layout.',
@@ -203,6 +223,34 @@ function auditFile(file, text) {
     if (ignored(line - 1)) continue;
     if (!/aspect/i.test(m[0]))
       add(file, line, 'warn', 'layout/img-aspect-ratio', `<${m[1]}> has no aspect-ratio.`, 'Declare aspect-ratio on the image or its container (1/1 avatars, 16/9 banners). If the parent already does, add `audit-ignore`.');
+  }
+
+
+  // ---- icons: Lucide usage per file
+  const lucide = text.match(/import\s*\{([^}]+)\}\s*from\s*['"]lucide-react['"]/);
+  if (lucide && /\.(jsx|tsx)$/.test(file)) {
+    const names = lucide[1].split(',').map((n) => n.trim().split(/\s+as\s+/).pop()).filter(Boolean);
+    const importLine = text.slice(0, lucide.index).split('\n').length;
+    for (const n of names)
+      if (/^(Sparkles?|Stars|Wand2?|WandSparkles)$/.test(n) && !ignored(importLine - 1))
+        add(file, importLine, 'warn', 'icon/ai-sparkle', `\`${n}\` is the generic "AI" icon.`, 'Show what the feature does with its own icon. A sparkle is only OK if it is the product\'s real mark.');
+    const tags = [...text.matchAll(new RegExp(`<(${names.join('|')})\\b([^>]*?)/?>`, 'gs'))];
+    const strokes = new Set(), sizes = new Set();
+    let unshrunk = 0, firstUnshrunk = 0;
+    for (const t of tags) {
+      const sw = t[2].match(/strokeWidth=\{?["']?([\d.]+)/); if (sw) strokes.add(sw[1]);
+      const sz = t[2].match(/\bsize=\{?["']?(\d+)/); if (sz) sizes.add(sz[1]);
+      const line = text.slice(0, t.index).split('\n').length;
+      if (!/shrink-0|flex-none|\bshrink\b/.test(t[2]) && /\bflex\b/.test(lines.slice(Math.max(0, line - 4), line).join(' ')) && !ignored(line - 1)) {
+        unshrunk++; if (!firstUnshrunk) firstUnshrunk = line;
+      }
+    }
+    if (strokes.size > 1)
+      add(file, importLine, 'warn', 'icon/mixed-stroke', `Icons use ${strokes.size} different stroke widths (${[...strokes].join(', ')}).`, 'One stroke width per surface; set it once (e.g. a wrapper or default prop).');
+    if (sizes.size > 2)
+      add(file, importLine, 'review', 'icon/mixed-size', `Icons use ${sizes.size} different sizes (${[...sizes].join(', ')}).`, 'Use one size per context (16 inline, 20 or 24 for headers). Confirm the variety is intentional.');
+    if (unshrunk)
+      add(file, firstUnshrunk, 'review', 'icon/squeezed', `${unshrunk} icon(s) in a flex context without \`shrink-0\`.`, 'Add `shrink-0` so long text cannot squeeze the icon.');
   }
 
   // ---- overlays should portal: only flag files that clearly define an overlay

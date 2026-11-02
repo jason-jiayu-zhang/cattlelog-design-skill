@@ -35,6 +35,15 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 | `motion/decorative-loop` | warn | Rule 7, DESIGN §4.1 | `animate-bounce`, `animate-ping`, `animate-spin` |
 | `motion/layout-property` | warn | Rule 7, DESIGN §14 | Transition on width/height/top/left/right/bottom/margin/padding/inset |
 | `motion/reduced-motion` | warn | Rule 7, DESIGN §4.5 | Motion used but no `prefers-reduced-motion` / `motion-reduce:` / `useReducedMotion` anywhere (project-level) |
+| `border/hairline` | warn | DESIGN §1, §17 | `border border-black-200` (1px) on a non-input line; should be `border-hairline` (0.5px) |
+| `border/colored-fill` | review | DESIGN §17 | Neutral `border-black-*` on the same line as a colored `bg-` fill (`surface-*`, `blue-100+`, `gold-*`, status) |
+| `icon/emoji` | warn | DESIGN §17 | Emoji inside a button, link, tab or labelled control |
+| `icon/ai-sparkle` | warn | DESIGN §17 | Lucide `Sparkles`, `Stars`, `Wand`, `WandSparkles` imports (`Star` is allowed for ratings) |
+| `icon/mixed-stroke` | warn | DESIGN §17 | More than one `strokeWidth` among a file's Lucide icons |
+| `icon/mixed-size` | review | DESIGN §17 | More than two distinct icon `size` values in one file |
+| `icon/squeezed` | review | DESIGN §17 | Lucide icon in a flex context with no `shrink-0` / `flex-none` |
+| `layout/flex-1-control` | review | DESIGN §17 | `flex-1` on a button, chip or badge |
+| `motion/will-change` | review | DESIGN §4, §17 | Any `will-change`; allowed only on the one element mid-animation |
 
 ## Manual checks (not in the script)
 
@@ -48,6 +57,11 @@ Maps each design-skill rule to how it is audited. `Script` rows are implemented 
 | Interactive states | SKILL.md checklist, DESIGN §11 | Buttons/links have hover, active, focus and disabled states. |
 | Skeletons and motion | DESIGN §4 | Skeleton mirrors content structure; alternating pulse durations. |
 | Truncation | DESIGN §3 | `break-words` plus explicit `line-clamp`; tooltip/`title` on ellipsis. |
+| Optical centering | DESIGN §17 | Labels in pills, badges and icon buttons look centered; `text-box: trim-both cap alphabetic` applied where they don't. |
+| Nested radii | DESIGN §17 | Outer radius = inner radius + padding between them. |
+| Spacing details | DESIGN §17 | No text touching a neighbor, no near-tangent edges, controls 8px+ from edges above, columns on one grid template, no icon squeezed by long text. |
+| Changing numbers | DESIGN §17 | Counts, ratings and GPA use `tabular-nums`. |
+| Button and overlay motion | DESIGN §4.4 | Idle/pending/done share one slot and never resize; popovers hold their anchor and don't drift while opening. |
 | Semantic tokens | SKILL.md checklist | Prefer semantic tokens (`bg-surface-base`, `text-primary`) over primitives. |
 | Aspect ratio via wrapper | Rule 3 | Dismiss `layout/img-aspect-ratio` when a parent declares a rigid ratio. |
 

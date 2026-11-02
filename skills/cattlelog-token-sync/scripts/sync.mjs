@@ -24,8 +24,14 @@ const prune = args.includes('--prune');
 const check = args.includes('--check');
 const figmaPath = flag('figma');
 const tokensPath = flag('tokens') ?? DEFAULT_TOKENS_PATH;
-const designMdPath = flag('design-md') ?? [path.resolve(skillsDir, '../design.md'), path.resolve(skillsDir, 'cattlelog-design-skill/design.md')].find(fs.existsSync);
-const designRefPath = flag('design-ref') ?? path.resolve(skillsDir, 'cattlelog-design-skill/references/DESIGN.md');
+const designMdPath = flag('design-md') ?? [path.resolve(skillsDir, 'cattlelog-design-skill/design.md'), path.resolve(skillsDir, '../design.md')].find(fs.existsSync);
+// Prose lives in the per-section files under references/design/ (DESIGN.md is only an index).
+// --design-ref may point at a single file or a directory of .md files.
+const designRefPath = flag('design-ref') ?? path.resolve(skillsDir, 'cattlelog-design-skill/references/design');
+const refFiles = !fs.existsSync(designRefPath) ? []
+  : fs.statSync(designRefPath).isDirectory()
+    ? fs.readdirSync(designRefPath).filter((f) => f.endsWith('.md')).sort().map((f) => path.join(designRefPath, f))
+    : [designRefPath];
 const cssPaths = (flag('css') ?? '').split(',').filter(Boolean);
 
 if (!figmaPath && !check) { console.error('usage: sync.mjs --figma=<file.json> [--write] [--prune] [--css=a.css] | --check'); process.exit(2); }
@@ -104,7 +110,8 @@ const cssFiles = cssPaths.map((p) => {
 });
 
 // DESIGN.md prose: `name` `#HEX` (also inside table rows `| \`ge-ah\` | \`#E11D48\` |`)
-const refText = fs.existsSync(designRefPath) ? fs.readFileSync(designRefPath, 'utf8') : '';
+const refTexts = new Map(refFiles.map((f) => [f, fs.readFileSync(f, 'utf8')]));
+const refText = [...refTexts.values()].join('\n');
 const PROSE = /`([a-z]+-[a-z0-9]+)`(\s*\|?\s*)`(#[0-9a-fA-F]{6})`/g;
 const proseFound = new Map();
 for (const m of refText.matchAll(PROSE)) if (COLOR_NAME.test(m[1])) proseFound.set(m[1], hex6(m[3]));
@@ -177,7 +184,10 @@ if (write && figma) {
   const prose = actionable.filter((d) => d.target === 'DESIGN.md prose');
   if (prose.length) {
     const want = new Map(prose.map((d) => [d.name, d.to]));
-    fs.writeFileSync(designRefPath, refText.replace(PROSE, (m, name, sep) => (want.has(name) ? `\`${name}\`${sep}\`${want.get(name)}\`` : m)));
+    for (const [f, t] of refTexts) {
+      const out = t.replace(PROSE, (m, name, sep) => (want.has(name) ? `\`${name}\`${sep}\`${want.get(name)}\`` : m));
+      if (out !== t) fs.writeFileSync(f, out);
+    }
   }
   console.log('\nWrote tokens.json, design.md' + (prose.length ? ', DESIGN.md prose' : '') + '. CSS files are never auto-edited: update them from the report above.');
   console.log('Next: `git diff`, then run the design audit to catch code still using old values.');

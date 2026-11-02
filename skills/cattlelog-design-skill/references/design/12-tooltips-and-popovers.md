@@ -1,0 +1,5 @@
+## 12. Tooltips & Popovers
+
+- **Portals:** all tooltips, popovers and dropdowns render via `createPortal` into `document.body`, positioned by a floating engine (e.g. `@floating-ui/react`) with `flip` and `shift` and a `16px` viewport margin.
+- **Tooltip:** transient, non-interactive helper text only (no links or buttons). Shows on `mouseenter` and `focus` after `300ms`, hides immediately on `mouseleave`/`blur`. `black-900` background, `black-0` Subtext, `px-3 py-1.5`, `6px` radius, max width `200px`, `role="tooltip"` and `aria-describedby` on the trigger. Fade/scale `95%` to `100%` over `150ms`. Tooltips have no touch behavior; anything essential must be visible without hover.
+- **Popover:** interactive content tied to an anchor; opens on click, closes on Escape or outside click. `black-0` background, `0.5px black-200` border, `shadow-strong`, `12px` radius, `p-4`. Moves focus in on open and back to the trigger on close. Trigger has `aria-haspopup="dialog"` and `aria-expanded`; popover is `role="dialog"`. On mobile a popover becomes a bottom sheet.
